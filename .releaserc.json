@@ -1,0 +1,10 @@
+{
+    "branches": ["master", {"name":"beta", "prerelease": true}],
+    "repositoryUrl": "https://github.com/Wyvarn/calamus.git",
+    "tagFormat": "v${version}",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github"
+    ]
+  }
