@@ -6,8 +6,9 @@
 			"check-space"
 		],
 		"indent": [
-			true,
-			"tabs"
+			false,
+			"tabs",
+			2
 		],
 		"one-line": [
 			true,

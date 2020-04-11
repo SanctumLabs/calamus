@@ -24,3 +24,5 @@ coverage
 # Environment varibles
 *.env
 *.env.*
+!.env.example
+!scripts/.env.test.example

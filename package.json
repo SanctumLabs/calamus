@@ -15,6 +15,7 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "tslint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test": "jest --forceExit --detectOpenHandles --coverage --verbose"
   },
   "dependencies": {

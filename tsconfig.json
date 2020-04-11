@@ -7,12 +7,19 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "build",
-		"baseUrl": ".",
+        "baseUrl": ".",
         "paths": {
             "*": [
                 "node_modules/*",
                 "src/types/*"
-            ]
+            ],
+            "@config": ["src/config.ts"],
+            "@database": ["src/database/*"],
+            "@core": ["src/core/*"],
+            "@logger": ["src/core/logger.ts"],
+            "@routes": ["src/routes/*"],
+            "@routesv1": ["src/routes/v1/*"],
+            "@auth": ["src/auth/*"]
         }
     },
     "include": [
