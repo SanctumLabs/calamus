@@ -1,28 +1,29 @@
 {
     "compilerOptions": {
         "module": "commonjs",
+        "allowJs": true,
         "esModuleInterop": true,
         "target": "es6",
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "build",
-        "baseUrl": ".",
+        "baseUrl": "src",
         "paths": {
-            "*": [
-                "node_modules/*",
-                "src/types/*"
-            ],
-            "@config": ["src/config.ts"],
-            "@database": ["src/database/*"],
-            "@core": ["src/core/*"],
-            "@logger": ["src/core/logger.ts"],
-            "@routes": ["src/routes/*"],
-            "@routesv1": ["src/routes/v1/*"],
-            "@auth": ["src/auth/*"]
+            "@config": ["config.ts"],
+            "@database/*": ["database/*"],
+            "@repository/*": ["database/repository/*"],
+            "@core/*": ["core/*"],
+            "@jwt": ["core/JWT.ts"],
+            "@logger": ["core/logger.ts"],
+            "@routes/*": ["routes/*"],
+            "@routesv1/*": ["routes/v1/*"],
+            "@auth/*": ["auth/*"],
+            "@utils/*": ["utils/*"]
         }
     },
     "include": [
         "src/**/*"
-	]
+    ],
+    "exclude": ["node_modules", "build", "dist"]
 }

@@ -17,6 +17,7 @@ node_modules
 
 # Ignore built files
 build
+dist
 
 # ignore test converage
 coverage
