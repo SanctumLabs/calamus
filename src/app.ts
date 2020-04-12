@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { corsUrl, environment } from '@config';
 import { NotFoundError, ApiError, InternalError } from '@core/ApiError';
-// import '@database'; // initialize database
+import '@database'; // initialize database
 // import routesV1 from '@routesv1';
 
 process.on('uncaughtException', e => {
