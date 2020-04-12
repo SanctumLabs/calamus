@@ -11,7 +11,10 @@ cache:
     - "/node_modules/"
 
 script:
-  - npm run build
+  - npm run test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   provider: heroku
