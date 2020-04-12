@@ -13,6 +13,8 @@
     "watch": "NODE_ENV=development nodemon",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "tslint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
+    "test:watch": "jest",
+    "test:coverage": "jest --coverage",
     "test": "jest --forceExit --detectOpenHandles --coverage --verbose"
   },
   "dependencies": {
