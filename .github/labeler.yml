@@ -1,4 +1,4 @@
-# Add 'core' label to any change within the 'core' directory
+# https://github.com/actions/labeler
 core:
   - src/core/*
   - src/core/**/*
