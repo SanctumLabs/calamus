@@ -1,0 +1,11 @@
+{
+    "ignore": [
+      "node_modules"
+    ],
+    "watch": [
+      "src",
+      "yarn.lock"
+    ],
+    "exec": "node -r dotenv/config build/server.js",
+    "ext": "ts"
+  }
