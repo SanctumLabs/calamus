@@ -28,5 +28,5 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: Wyvarn/calamus/calamusapi
+        repository: wyvarn/calamus/calamusapi
         tag_with_ref: true
