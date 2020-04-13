@@ -8,8 +8,8 @@ auth:
   - src/auth/**/*
 
 database:
-  - src/auth/*
-  - src/auth/**/*
+  - src/database/*
+  - src/database/**/*
 
 utils:
   - src/utils/*
@@ -31,7 +31,7 @@ build:
   - Dockerfile
   - docker-compose.yml
   - .nvmrc
-  -.babelrc
+  - .babelrc
   - mongodb/*
 
 api:
@@ -51,7 +51,8 @@ ci:
   - .travis.yml
   - Procfile
   - .releaserc.json
-  
+  - github/workflows/*
+
 test:
   - src/**/*.test.(ts|js)
   - src/**/*.spec.(js|ts)

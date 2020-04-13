@@ -1,0 +1,20 @@
+name: Node.js Package
+
+on:
+  push:
+    branches: [master, beta, develop]
+
+jobs:
+  publish-gpr:
+    name: Publish to Github NPM Registrys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 13
+          registry-url: https://npm.pkg.github.com/
+      - run: yarn
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
