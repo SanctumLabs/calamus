@@ -22,7 +22,7 @@ module.exports = {
     "^@logger": "<rootDir>/src/core/logger.ts",
     "^@routes/(.*)$": "<rootDir>/src/routes/$1",
     "^@routesv1/(.*)$": "<rootDir>/src/routes/v1/$1",
-    "^@auth/(.*)$": "<rootDir>/src/auth/$1",
+    "^@security/(.*)$": "<rootDir>/src/security/$1",
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
     "app-request": "<rootDir>/src/types/app-request.d.ts",
   },

@@ -25,7 +25,7 @@ module.exports = {
       "@logger": path.resolve("src/core/logger.ts"),
       "@routes": path.resolve("src/routes/"),
       "@routesv1": path.resolve("src/routes/v1/"),
-      "@auth": path.resolve("src/auth/"),
+      "@security": path.resolve("src/security/"),
       "@utils": path.resolve("src/utils/"),
       "app-request": path.resolve("src/types/app-request.d.ts"),
     },

@@ -18,7 +18,7 @@
             "@logger": ["core/logger.ts"],
             "@routes/*": ["routes/*"],
             "@routesv1/*": ["routes/v1/*"],
-            "@auth/*": ["auth/*"],
+            "@security/*": ["security/*"],
             "@utils/*": ["utils/*"],
             "app-request": ["types/app-request.d.ts"]
         }
