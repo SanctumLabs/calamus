@@ -25,6 +25,7 @@ chore:
   - .env.*
   - lintstagedrc
   - github/*
+  - .npmignore
 
 build:
   - webpack.config.js

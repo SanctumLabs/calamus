@@ -1,6 +1,7 @@
 {
-  "name": "calamus",
+  "name": "@wyvarn/calamus",
   "version": "1.0.0",
+  "private": false,
   "description": "express blog api",
   "main": "server.js",
   "repository": "git@github.com:Wyvarn/calamus.git",
