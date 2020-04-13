@@ -206,6 +206,10 @@ NB: the secrets.GITHUB_TOKEN field is always available and scoped to the reposit
 
 For Github release automation, [semantic-release](https://github.com/semantic-release/semantic-release) has been picked, but any other solution can be picked as well. The configuratons can be found [here](.releaserc.json). The automated releases have been setup to only run on master and beta branches(if you have a beta branch that is). The tool is automated with Travis.
 
+### API Documentation
+
+API documentation has been setup using [Apiary](https://apiary.io/) and the documentation can be found [here](https://calamusapi.docs.apiary.io/) and editing can be done [here](./apiary.apib). If you intend to use the same method to document the API, Then you will need to have an account with Apiary. If not, then this is not required.
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags](https://github.com/Wyvarn/calamus/releases) in this repository.
