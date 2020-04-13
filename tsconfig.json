@@ -15,11 +15,14 @@
             "@database/*": ["database/*"],
             "@repository/*": ["database/repository/*"],
             "@core/*": ["core/*"],
-            "@jwt": ["core/JWT.ts"],
+            "@jwt": ["core/jwt/JWT.ts"],
             "@logger": ["core/logger.ts"],
             "@routes/*": ["routes/*"],
             "@routesv1/*": ["routes/v1/*"],
             "@security/*": ["security/*"],
+            "@authentication/*": ["security/authentication/*"],
+            "@authorization/*": ["security/authorization/*"],
+            "@authUtils": ["security/authUtils/index.ts"],
             "@utils/*": ["utils/*"],
             "app-request": ["types/app-request.d.ts"]
         }
