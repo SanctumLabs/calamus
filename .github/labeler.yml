@@ -8,8 +8,8 @@ auth:
   - src/auth/**/*
 
 database:
-  - src/auth/*
-  - src/auth/**/*
+  - src/database/*
+  - src/database/**/*
 
 utils:
   - src/utils/*
