@@ -14,7 +14,9 @@ script:
   - npm run test
 
 after_success:
+  - export CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
   - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
 
 deploy:
   provider: heroku
