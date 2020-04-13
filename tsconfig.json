@@ -19,7 +19,8 @@
             "@routes/*": ["routes/*"],
             "@routesv1/*": ["routes/v1/*"],
             "@auth/*": ["auth/*"],
-            "@utils/*": ["utils/*"]
+            "@utils/*": ["utils/*"],
+            "app-request": ["types/app-request.d.ts"]
         }
     },
     "include": [

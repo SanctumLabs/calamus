@@ -18,11 +18,12 @@ module.exports = {
     "^@database/(.*)$": "<rootDir>/src/database/$1",
     "^@repository/(.*)$": "<rootDir>/src/database/repository/$1",
     "^@core/(.*)$": "<rootDir>/src/core/$1",
-    "^@jwt/(.*)$": "<rootDir>/src/core/JWT.ts",
+    "^@jwt": "<rootDir>/src/core/JWT.ts",
     "^@logger": "<rootDir>/src/core/logger.ts",
     "^@routes/(.*)$": "<rootDir>/src/routes/$1",
     "^@routesv1/(.*)$": "<rootDir>/src/routes/v1/$1",
     "^@auth/(.*)$": "<rootDir>/src/auth/$1",
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
+    "app-request": "<rootDir>/src/types/app-request.d.ts",
   },
 };
