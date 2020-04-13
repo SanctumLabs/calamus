@@ -14,7 +14,9 @@ module.exports = {
     "^.+\\.ts$": "ts-jest",
   },
   moduleNameMapper: {
+    "^@app": "<rootDir>/src/app.ts",
     "^@config": "<rootDir>/src/config.ts",
+    "^@database": "<rootDir>/src/database",
     "^@database/(.*)$": "<rootDir>/src/database/$1",
     "^@repository/(.*)$": "<rootDir>/src/database/repository/$1",
     "^@core/(.*)$": "<rootDir>/src/core/$1",

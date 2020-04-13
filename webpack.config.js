@@ -17,6 +17,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
     alias: {
+      "@app": path.resolve("src/app.ts"),
       "@config": path.resolve("src/config.ts"),
       "@database": path.resolve("src/database/"),
       "@repository": path.resolve("src/database/repository/"),

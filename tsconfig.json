@@ -10,6 +10,7 @@
         "outDir": "build",
         "baseUrl": "src",
         "paths": {
+            "@app": ["app.ts"],
             "@config": ["config.ts"],
             "@database/*": ["database/*"],
             "@repository/*": ["database/repository/*"],
