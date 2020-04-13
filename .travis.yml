@@ -5,26 +5,41 @@ node_js:
   - '12'
   - '13'
 
+stages:
+  - tests
+  - name: deploy
+    if: branch = master
+  - name: test_deployment
+    if: branch = master
+  - name: release
+    if: branch = master || branch = beta
+
 cache:
   yarn: true
   directories:
     - "/node_modules/"
 
-script:
-  - npm run test
+jobs:
+  include:
+    - stage: tests
+      script: 
+        - npm run test
+        - export CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
+        - bash <(curl -s https://codecov.io/bash)
+        - bash <(curl -Ls https://coverage.codacy.com/get.sh)
 
-after_success:
-  - export CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
-  - bash <(curl -s https://codecov.io/bash)
-  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
+    - stage: deploy
+      script: skip
+      deploy: &heroku
+        provider: heroku
+        app: calamusapi
+        on:
+          branch: master
+        api_key:
+          secure: H/gS8a/+lTbntTGedWJP2NLtqTh1eqmtznzI8PiHjujLKrwyyvnLj7oe0zBK5rc6flxC53i6GFFQZNdDQkFjEVW0nyotYCt9wQUMNrS1xMImhEKbsd/HWjT2EYmwrCPqYvNXcIBQsZAfhYOwYrY0qHfleETCmc763nQAfCrvYNp5tLXvyl2DqLbOHymYvghqgFxHsvKn5Powj+TsnoprM4H30Vkqf4fnq68Vc38TAilQXZBX7xQQVhR3f0ZCwfvzQUdAzXs76JKfI2ee2EAUXAHmHhahkzcC2DZAtKwQOvRMWz4lz6pkjcPQbhvdBUFcs1U3rDLxbb2yi5h+vufiAYOF3xO3LLGxpB/WlexSTr5j8/0fgvmEvZ+ZOHRIaqH7i3XbWq6h7Gi34n1Prfx947rqJUC/8hovoqb0jYud9AyLRPjCug5ytz1P3yeYi0L27qCExo8yrkFIxH/n0FJ3LSnjjwTdv+UWqNjGsG66pT0/oQVg8/b5psTs0dQMNKrTMJJErSKWzi4kTUmrZbKtNmqF69XVbeWudn0ZlDGA+j9i7a4WqK/POZuotXOEU12U9SimXLF2i9+T//IgmHL40IimU7BmUMvs0hVhdxGLrHJzrBhMssFtlHPhMPGE+JvpAjwsHzQDKGLNctrR+eCsZfGDXCqtCxeK5jaAbXDuL8M=
+    
+    - stage: test_deployment
+      script: 'curl http://calamusapi.herokuapp.com/health'
 
-deploy:
-  provider: heroku
-  app: calamusapi
-  on:
-    branch: master
-  api_key:
-    secure: H/gS8a/+lTbntTGedWJP2NLtqTh1eqmtznzI8PiHjujLKrwyyvnLj7oe0zBK5rc6flxC53i6GFFQZNdDQkFjEVW0nyotYCt9wQUMNrS1xMImhEKbsd/HWjT2EYmwrCPqYvNXcIBQsZAfhYOwYrY0qHfleETCmc763nQAfCrvYNp5tLXvyl2DqLbOHymYvghqgFxHsvKn5Powj+TsnoprM4H30Vkqf4fnq68Vc38TAilQXZBX7xQQVhR3f0ZCwfvzQUdAzXs76JKfI2ee2EAUXAHmHhahkzcC2DZAtKwQOvRMWz4lz6pkjcPQbhvdBUFcs1U3rDLxbb2yi5h+vufiAYOF3xO3LLGxpB/WlexSTr5j8/0fgvmEvZ+ZOHRIaqH7i3XbWq6h7Gi34n1Prfx947rqJUC/8hovoqb0jYud9AyLRPjCug5ytz1P3yeYi0L27qCExo8yrkFIxH/n0FJ3LSnjjwTdv+UWqNjGsG66pT0/oQVg8/b5psTs0dQMNKrTMJJErSKWzi4kTUmrZbKtNmqF69XVbeWudn0ZlDGA+j9i7a4WqK/POZuotXOEU12U9SimXLF2i9+T//IgmHL40IimU7BmUMvs0hVhdxGLrHJzrBhMssFtlHPhMPGE+JvpAjwsHzQDKGLNctrR+eCsZfGDXCqtCxeK5jaAbXDuL8M=
-
-after_deploy:
-  - npx semantic-release
+    - stage: release
+      script: npx semantic-release
