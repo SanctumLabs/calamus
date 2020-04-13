@@ -2,7 +2,7 @@
   "name": "calamus",
   "version": "1.0.0",
   "description": "express blog api",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "git@github.com:Wyvarn/calamus.git",
   "author": "BrianLusina <12752833+BrianLusina@users.noreply.github.com>",
   "license": "MIT",
