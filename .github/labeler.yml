@@ -4,8 +4,8 @@ core:
   - src/core/**/*
 
 auth:
-  - src/auth/*
-  - src/auth/**/*
+  - src/security/*
+  - src/security/**/*
 
 database:
   - src/database/*
