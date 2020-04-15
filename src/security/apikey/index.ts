@@ -21,6 +21,7 @@ export default router.use(validator(schema.apiKey, ValidationSource.HEADER),
         logger.info(`Found API Key ${apiKey}`);
 
         if (!apiKey) {
+            logger.warn('API Key not found');
             throw new ForbiddenError();
         }
 

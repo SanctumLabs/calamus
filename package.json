@@ -16,7 +16,8 @@
     "tslint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test:watch": "jest",
     "test:coverage": "jest --coverage",
-    "test": "jest --forceExit --detectOpenHandles --coverage --verbose"
+    "test": "jest --forceExit --detectOpenHandles --coverage --verbose",
+    "test:api-doc": "dredd apiary.apib http://localhost:3000"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -56,6 +57,7 @@
     "colors": "^1.4.0",
     "concurrently": "^5.1.0",
     "dotenv": "^8.2.0",
+    "dredd": "^13.0.2",
     "husky": "^4.2.5",
     "jest": "^25.3.0",
     "lint-staged": "^10.1.3",

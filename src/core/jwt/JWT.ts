@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import { sign, verify } from 'jsonwebtoken';
 import logger from '@logger';
 import { InternalError, BadTokenError, TokenExpiredError } from '@core/ApiError';
+import { JwtException } from './exceptions';
 
 /*
  * issuer 		— Software organization who issues the token.
@@ -33,19 +34,34 @@ export class JwtPayload {
 export default class JWT {
 
 	private static readPublicKey(): Promise<string> {
-		return promisify(readFile)(path.join(__dirname, '../../../keys/public.pem'), 'utf8');
+		try {
+			return promisify(readFile)(path.join('./keys/public.pem'), 'utf8');
+		} catch (error) {
+			logger.error(`Failed to read public key ${error}`);
+			throw new Error(`Failed to read file with err ${error.message}`);
+		}
 	}
 
 	private static readPrivateKey(): Promise<string> {
-		return promisify(readFile)(path.join(__dirname, '../../../keys/private.pem'), 'utf8');
+		try {
+			return promisify(readFile)(path.join('./keys/private.pem'), 'utf8');
+		} catch (error) {
+			logger.error(`Failed to read private key ${error}`);
+			throw new Error(`Failed to read file with err ${error.message}`);
+		}
     }
 
 	public static async encode(payload: JwtPayload): Promise<string> {
-		const cert = await this.readPrivateKey();
-		if (!cert)
-			throw new InternalError('Token generation failure');
-		// @ts-ignore
-		return promisify(sign)({ ...payload }, cert, { algorithm: 'RS256' });
+		try {
+			const cert = await this.readPrivateKey();
+			if (!cert)
+				throw new InternalError('Token generation failure');
+			// @ts-ignore
+			return promisify(sign)({ ...payload }, cert, { algorithm: 'RS256' });
+		} catch (error) {
+			logger.error(`Failed to encode jwt payload with err ${error.message}`);
+			throw new JwtException(`Failed to encode jwt payload with err ${error.message}`);
+		}
 	}
 
 	/**
