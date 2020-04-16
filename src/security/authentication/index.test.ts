@@ -9,7 +9,7 @@ import supertest from 'supertest';
 
 describe('authentication validation', () => {
 
-	const endpoint = '/v1/profile/my/test';
+	const endpoint = '/api/v1/profile/my/test';
 	const request = supertest(app);
 
 	beforeEach(() => {

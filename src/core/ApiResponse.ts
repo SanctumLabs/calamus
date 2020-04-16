@@ -9,6 +9,7 @@ enum StatusCode {
 }
 
 enum ResponseStatus {
+	CREATED = 201,
 	SUCCESS = 200,
 	BAD_REQUEST = 400,
 	UNAUTHORIZED = 401,
@@ -30,7 +31,7 @@ abstract class ApiResponse {
 
     private static sanitize<T extends ApiResponse>(response: T): T {
         const clone: T = <T>{};
-        Object.assign(clone, response);
+		Object.assign(clone, response);
         delete clone.status;
         for (const key in clone) {
             if (typeof clone[key] === 'undefined') {

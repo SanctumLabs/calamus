@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import User from '@database/repository/user/UserModel';
 import { tokenInfo } from '@config';
 import JWT, { JwtPayload } from '@jwt';
+import logger from '@logger';
 
 /**
  * This gets the access token from the header
@@ -31,28 +32,33 @@ export const validateTokenData = (payload: JwtPayload): boolean => {
 
 export const createTokens = async (user: User, accessTokenKey: string, refreshTokenKey: string)
 	: Promise<Tokens> => {
-	const accessToken = await JWT.encode(
-		new JwtPayload(
-			tokenInfo.issuer,
-			tokenInfo.audience,
-			user._id.toString(),
-			accessTokenKey,
-			tokenInfo.accessTokenValidityDays));
+		try {
+			const accessToken = await JWT.encode(
+				new JwtPayload(
+					tokenInfo.issuer,
+					tokenInfo.audience,
+					user._id.toString(),
+					accessTokenKey,
+					tokenInfo.accessTokenValidityDays));
 
-	if (!accessToken) throw new InternalError();
+			if (!accessToken) throw new InternalError();
 
-	const refreshToken = await JWT.encode(
-		new JwtPayload(
-			tokenInfo.issuer,
-			tokenInfo.audience,
-			user._id.toString(),
-			refreshTokenKey,
-			tokenInfo.refreshTokenValidityDays));
+			const refreshToken = await JWT.encode(
+				new JwtPayload(
+					tokenInfo.issuer,
+					tokenInfo.audience,
+					user._id.toString(),
+					refreshTokenKey,
+					tokenInfo.refreshTokenValidityDays));
 
-	if (!refreshToken) throw new InternalError();
+			if (!refreshToken) throw new InternalError();
 
-	return <Tokens>{
-		accessToken: accessToken,
-		refreshToken: refreshToken
-	};
+			return <Tokens>{
+				accessToken: accessToken,
+				refreshToken: refreshToken
+			};
+		} catch (error) {
+			logger.error(`Failed to create tokens with error ${error}`);
+			throw new InternalError();
+		}
 };

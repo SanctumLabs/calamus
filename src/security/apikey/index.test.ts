@@ -4,7 +4,7 @@ import supertest from 'supertest';
 
 describe('apikey validation', () => {
 
-	const endpoint = '/v1/dummy/test';
+	const endpoint = '/api/v1/dummy/test';
 	const request = supertest(app);
 
 	beforeEach(() => {

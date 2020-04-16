@@ -10,7 +10,7 @@ import { RoleCode } from '@repository/role/RoleModel';
 
 describe('authentication validation for editor', () => {
 
-	const endpoint = '/v1/editor/blog/test';
+	const endpoint = '/api/v1/editor/blog/test';
 	const request = supertest(app);
 
 	beforeEach(() => {
@@ -30,7 +30,7 @@ describe('authentication validation for editor', () => {
 
 describe('authentication validation for writer', () => {
 
-	const endpoint = '/v1/writer/blog/test';
+	const endpoint = '/api/v1/writer/blog/test';
 	const request = supertest(app);
 
 	beforeEach(() => {
