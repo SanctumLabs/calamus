@@ -31,7 +31,7 @@ abstract class ApiResponse {
 
     private static sanitize<T extends ApiResponse>(response: T): T {
         const clone: T = <T>{};
-        Object.assign(clone, response);
+		Object.assign(clone, response);
         delete clone.status;
         for (const key in clone) {
             if (typeof clone[key] === 'undefined') {

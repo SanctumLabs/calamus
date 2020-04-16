@@ -12,7 +12,7 @@ import app from '@app';
 
 describe('Register route', () => {
 
-	const endpoint = '/v1/register';
+	const endpoint = '/api/v1/register';
 	const request = supertest(app);
 
 	const email = 'abc@xyz.com';
@@ -136,8 +136,8 @@ describe('Register route', () => {
 			})
 		);
 
-		expect(response.status).toBe(400);
-		expect(response.body.message).toMatch(/already registered/);
+		expect(response.status).toBe(409);
+		expect(response.body.message).toMatch(/User already exists/);
 		expect(mockUserFindByEmail).toBeCalledTimes(1);
 		expect(bcryptHashSpy).not.toBeCalled();
 		expect(mockUserCreate).not.toBeCalled();
@@ -171,7 +171,6 @@ describe('Register route', () => {
 		expect(bcryptHashSpy).toBeCalledTimes(1);
 		expect(mockUserCreate).toBeCalledTimes(1);
 		expect(createTokensSpy).toBeCalledTimes(1);
-		expect(cryptoRandomBytesSpy).toBeCalledTimes(2);
 
 		expect(bcryptHashSpy).toBeCalledWith(USER_PASSWORD, 10);
 	});

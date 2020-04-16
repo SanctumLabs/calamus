@@ -26,4 +26,5 @@ coverage
 *.env
 *.env.*
 !.env.example
-!scripts/.env.test.example
+!.env.test.example
+.vscode

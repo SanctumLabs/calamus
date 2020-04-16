@@ -11,13 +11,13 @@ import User from '@repository/user/UserModel';
 import { BadRequestError } from '@core/ApiError';
 import { RoleCode } from '@repository/role/RoleModel';
 import { createTokens } from '@authUtils';
-import { SuccessResponse, FailureMsgResponse, InternalErrorResponse } from '@core/ApiResponse';
+import { SuccessResponse, InternalErrorResponse } from '@core/ApiResponse';
 import logger from '@core/logger';
 
 const router = express.Router();
 
 router.post('',
-    validator(schema.register),
+    validator(schema),
     asyncHandler(async (request: RoleRequest, res, next) => {
         try {
             const user = await userRepository.findByEmail(request.body.email);
@@ -50,8 +50,12 @@ router.post('',
             }
 
         } catch (error) {
-            logger.error(`Failed with error ${error}`);
-            throw error;
+            logger.error(`Failed with ${error}`);
+            res.status(409).send(
+                {
+                    'message': error.message
+                }
+            );
         }
     })
 );

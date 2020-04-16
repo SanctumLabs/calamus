@@ -8,7 +8,7 @@ module.exports = {
     "<rootDir>/src/**/__tests__/**/*.{js,ts,tsx,jsx,mjs}",
     "<rootDir>/src/**/?(*.)(spec|test).{js,ts,tsx,jsx,mjs}",
   ],
-  setupFiles: ["<rootDir>/scripts/setup.ts"],
+  setupFiles: ["<rootDir>/scripts/setup-tests.ts"],
   collectCoverageFrom: ["<rootDir>/src/**/*.ts", "!**/node_modules/**"],
   transform: {
     "^.+\\.ts$": "ts-jest",

@@ -6,9 +6,5 @@ import { Request, Response, NextFunction } from 'express';
 type AsyncFunction = (request: Request, response: Response, next: NextFunction) => Promise<any>;
 
 export default(execution: AsyncFunction) => (request: Request, response: Response, next: NextFunction) => {
-    try {
-        execution(request, response, next);
-    } catch (error) {
-        //
-    }
+    execution(request, response, next);
 };
