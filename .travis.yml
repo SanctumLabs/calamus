@@ -26,7 +26,7 @@ jobs:
         - cp .env.test.example .env.test
         - cp keys/private.pem.example keys/private.pem
         - cp keys/public.pem.example keys/public.pem
-        - npm run test
+        - npm run test:coverage
         - export CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
         - bash <(curl -s https://codecov.io/bash)
         - bash <(curl -Ls https://coverage.codacy.com/get.sh)

@@ -16,7 +16,7 @@
     "tslint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test": "jest --forceExit --detectOpenHandles --coverage --verbose",
+    "test": "jest --runInBand --forceExit --verbose",
     "test:api-doc": "dredd apiary.apib http://localhost:3000"
   },
   "dependencies": {

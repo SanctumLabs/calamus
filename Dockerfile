@@ -1,23 +1,18 @@
-# Here we are getting our node as Base image
 FROM node:13
 
-# create user in the docker image
-USER node
-
-# Creating a new directory for app files and setting path in the container
-RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
-
 # setting working directory in the container
-WORKDIR /home/node/app
+WORKDIR /usr/src/app
 
 # grant permission of node project directory to node user
-COPY --chown=node:node . .
+COPY build/server.js server.js
+COPY keys keys
+COPY package.json package.json
 
-# installing the dependencies into the container
-RUN npm install
+RUN npm install --production
+RUN npm install pm2 -g
 
 # container exposed network port number
 EXPOSE 3000
 
 # command to run within the container
-CMD [ "npm", "serve" ]
+CMD [ "pm2-runtime", "start", "server.js", "-i", "max" ]
