@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 COPY build/server.js server.js
 COPY keys keys
 COPY package.json package.json
+COPY ecosystem.config.js ecosystem.config.js
 
 RUN npm install --production
 RUN npm install pm2 -g
@@ -15,4 +16,4 @@ RUN npm install pm2 -g
 EXPOSE 3000
 
 # command to run within the container
-CMD [ "pm2-runtime", "start", "server.js", "-i", "max" ]
+CMD [ "pm2-runtime", "start", "ecosystem.config.js" ]
