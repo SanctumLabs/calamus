@@ -22,7 +22,8 @@ export const getAccessToken = (authorization: string): string => {
 };
 
 export const validateTokenData = (payload: JwtPayload): boolean => {
-    if (!payload || !payload.iss || !payload.sub || !payload.aud || !payload.prm
+	if (!payload || !payload.iss || !payload.sub || !payload.aud || !payload.jti
+		|| !payload.name
 		|| payload.iss !== tokenInfo.issuer
 		|| payload.aud !== tokenInfo.audience
 		|| !Types.ObjectId.isValid(payload.sub))
@@ -30,26 +31,41 @@ export const validateTokenData = (payload: JwtPayload): boolean => {
 	return true;
 };
 
+/**
+ * This creates access and refresh JWT tokens that will be used to authorize a user to access
+ * protected resources on the server.
+ * @param {User} user User object
+ * @param {string} accessTokenKey unique random key that is used as the jti in JWT
+ * @param {string} refreshTokenKey unique random key that is used as a jti in JWT
+ */
 export const createTokens = async (user: User, accessTokenKey: string, refreshTokenKey: string)
 	: Promise<Tokens> => {
 		try {
 			const accessToken = await JWT.encode(
 				new JwtPayload(
+					accessTokenKey,
 					tokenInfo.issuer,
 					tokenInfo.audience,
 					user._id.toString(),
-					accessTokenKey,
-					tokenInfo.accessTokenValidityDays));
+					tokenInfo.accessTokenValidityDays,
+					user.name,
+					user.roles
+					)
+				);
 
 			if (!accessToken) throw new InternalError();
 
 			const refreshToken = await JWT.encode(
 				new JwtPayload(
+					refreshTokenKey,
 					tokenInfo.issuer,
 					tokenInfo.audience,
 					user._id.toString(),
-					refreshTokenKey,
-					tokenInfo.refreshTokenValidityDays));
+					tokenInfo.refreshTokenValidityDays,
+					user.name,
+					user.roles,
+					)
+				);
 
 			if (!refreshToken) throw new InternalError();
 

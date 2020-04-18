@@ -1,14 +1,17 @@
 import { readFileSpy } from './mock';
 import JWT, { JwtPayload } from './JWT';
 import { BadTokenError, TokenExpiredError } from '@core/ApiError';
+import Role from '@database/repository/role/RoleModel';
 
 describe('JWT class tests', () => {
 
+	const jti = 'jti';
 	const issuer = 'issuer';
 	const audience = 'audience';
 	const subject = 'subject';
-	const param = 'param';
+	const name = 'name';
 	const validity = 1;
+	const roles: Role[] = [];
 
 	it('Should throw error for invalid token in JWT.decode', async () => {
 
@@ -31,7 +34,7 @@ describe('JWT class tests', () => {
 			readFileSpy.mockClear();
 		});
 
-		const payload = new JwtPayload(issuer, audience, subject, param, validity);
+		const payload = new JwtPayload(jti, issuer, audience, subject, validity, name, roles);
         const token = await JWT.encode(payload);
 
 		expect(typeof token).toBe('string');
@@ -44,7 +47,7 @@ describe('JWT class tests', () => {
 			readFileSpy.mockClear();
 		});
 
-		const payload = new JwtPayload(issuer, audience, subject, param, validity);
+		const payload = new JwtPayload(jti, issuer, audience, subject, validity, name, roles);
 		const token = await JWT.encode(payload);
 		const decoded = await JWT.decode(token);
 
@@ -61,12 +64,14 @@ describe('JWT class tests', () => {
 		const time = Math.floor(Date.now() / 1000);
 
 		const payload = <JwtPayload>{
+			jti,
 			aud: audience,
 			sub: subject,
 			iss: issuer,
 			iat: time,
 			exp: time,
-			prm: param,
+			name,
+			roles
 		};
 		const token = await JWT.encode(payload);
 		const decoded = await JWT.decode(token);
@@ -96,7 +101,7 @@ describe('JWT class tests', () => {
 			readFileSpy.mockClear();
 		});
 
-		const payload = new JwtPayload(issuer, audience, subject, param, validity);
+		const payload = new JwtPayload(jti, issuer, audience, subject, validity, name, roles);
 		const token = await JWT.encode(payload);
 		const decoded = await JWT.validate(token);
 
@@ -113,12 +118,14 @@ describe('JWT class tests', () => {
 		const time = Math.floor(Date.now() / 1000);
 
 		const payload = <JwtPayload>{
+			jti,
 			aud: audience,
 			sub: subject,
 			iss: issuer,
 			iat: time,
 			exp: time,
-			prm: param,
+			name,
+			roles
 		};
 		const token = await JWT.encode(payload);
 		try {

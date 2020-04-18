@@ -5,6 +5,7 @@ import { sign, verify } from 'jsonwebtoken';
 import logger from '@logger';
 import { InternalError, BadTokenError, TokenExpiredError } from '@core/ApiError';
 import { JwtException } from './exceptions';
+import Role from '@database/repository/role/RoleModel';
 
 /*
  * issuer 		— Software organization who issues the token.
@@ -14,20 +15,49 @@ import { JwtException } from './exceptions';
  * algorithm 	— Encryption algorithm to be used to protect the token.
  */
 export class JwtPayload {
+	jti: string;
 	aud: string;
 	sub: string;
 	iss: string;
 	iat: number;
 	exp: number;
-	prm: string;
+	name: string;
+	typ: string;
+	roles: Role[];
+	nbf: number;
 
-	constructor(issuer: string, audience: string, subject: string, param: string, validity: number) {
+	/**
+	 * Creates an instance of JWT Payload which is token based off the JWT specification
+	 * which can be found here https://tools.ietf.org/html/rfc7519.
+	 * Other keys available in the token are:
+	 *
+	 * nbf (Not Before) Claim which is used to state that this token is not valid for dates before
+	 * the time the token was issued
+	 *
+	 * exp THe expiry time of the token
+	 *
+	 * iat The time tht token is issued
+	 *
+	 * @param {string} jti Uniqu JWT ID used to identify this token
+	 * @param {string} issuer Who created and signed this token
+	 * @param {string} audience who this token is meant for
+	 * @param {string} subject whom the token refers to
+	 * @param {string} name Name of token subject
+	 * @param {Role[]} roles Roles assigned to user
+	 * @param {number} validity Used in calculation of the expiration time of a JWT token
+	 * @param {string} type Type of token, will default to Bearer
+	 */
+	constructor(jti: string, issuer: string, audience: string, subject: string, validity: number, name: string, roles: Role[], type: string = 'Bearer') {
+		this.jti = jti;
 		this.iss = issuer;
 		this.aud = audience;
 		this.sub = subject;
 		this.iat = Math.floor(Date.now() / 1000);
 		this.exp = this.iat + (validity * 24 * 60 * 60);
-		this.prm = param;
+		this.nbf = this.iat;
+		this.name = name;
+		this.typ = type;
+		this.roles = roles;
 	}
 }
 

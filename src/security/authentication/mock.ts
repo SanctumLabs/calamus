@@ -25,7 +25,7 @@ export const mockJwtValidate = jest.fn(
 			sub: USER_ID.toHexString(),
 			iat: 1,
 			exp: 2,
-			prm: 'abcdef'
+			name: 'name'
 		};
 		throw new BadTokenError();
 	});
