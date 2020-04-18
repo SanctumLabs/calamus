@@ -1,17 +1,17 @@
-import express from 'express';
+import express, { NextFunction, Response } from 'express';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import pick from 'lodash/pick';
 import validator from '@utils/validators';
 import asyncHandler from '@utils/asyncHandler';
-import { RoleRequest } from 'app-request';
+import { RoleRequest, ProtectedRequest } from 'app-request';
 import schema from './schema';
 import userRepository from '@repository/user';
 import User from '@repository/user/UserModel';
 import { BadRequestError } from '@core/ApiError';
 import { RoleCode } from '@repository/role/RoleModel';
 import { createTokens } from '@authUtils';
-import { SuccessResponse, InternalErrorResponse } from '@core/ApiResponse';
+import { SuccessResponse, InternalErrorResponse, SuccessMsgResponse } from '@core/ApiResponse';
 import logger from '@core/logger';
 
 const router = express.Router();

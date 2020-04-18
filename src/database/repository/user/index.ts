@@ -73,4 +73,8 @@ export default class UserRepository {
 		user.updatedAt = new Date();
 		return UserModel.updateOne({ _id: user._id }, { $set: { ...user }, }).lean().exec();
 	}
+
+	public static removeUser(user: User): Promise<User> {
+		return UserModel.findByIdAndRemove(user._id).lean<User>().exec();
+	}
 }
