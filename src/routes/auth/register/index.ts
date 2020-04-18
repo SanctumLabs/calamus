@@ -16,6 +16,11 @@ import logger from '@core/logger';
 
 const router = express.Router();
 
+/**
+ * Registration endpoint. This will first check if the user exists by the given email address
+ * Then will throw an error 409, citing conflict (that the user already exists with that email address)
+ * Afterwards this will then proceed to create a random access token key
+ */
 router.post('',
     validator(schema),
     asyncHandler(async (request: RoleRequest, res, next) => {

@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { RoleRequest } from 'types/app-request';
+import { RoleRequest } from 'app-request';
 import { RoleCode } from '@repository/role/RoleModel';
 
 export default(roleCode: RoleCode) => {

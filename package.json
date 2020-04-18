@@ -3,7 +3,7 @@
   "private": false,
   "description": "express blog api",
   "main": "server.js",
-  "version": "1.4.2",
+  "version": "1.6.0",
   "repository": "git@github.com:Wyvarn/calamus.git",
   "author": "BrianLusina <12752833+BrianLusina@users.noreply.github.com>",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "tslint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test": "jest --forceExit --detectOpenHandles --coverage --verbose",
+    "test": "jest --runInBand --forceExit --verbose",
     "test:api-doc": "dredd apiary.apib http://localhost:3000"
   },
   "dependencies": {

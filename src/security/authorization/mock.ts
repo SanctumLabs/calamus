@@ -79,12 +79,15 @@ export const mockJwtValidate = jest.fn(
 				break;
 		}
 		if (subject) return <JwtPayload>{
+			jti: 'random-id',
 			iss: tokenInfo.issuer,
 			aud: tokenInfo.audience,
 			sub: subject,
 			iat: 1,
 			exp: 2,
-			prm: 'abcdef'
+			typ: 'Bearer',
+			name: 'john',
+			roles: []
 		};
 		throw new BadTokenError();
 	});

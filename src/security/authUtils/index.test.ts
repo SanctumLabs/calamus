@@ -7,6 +7,9 @@ import User from '@repository/user/UserModel';
 
 const ACCESS_TOKEN_KEY = 'abc';
 const REFRESH_TOKEN_KEY = 'xyz';
+const JTI = 'jti';
+const SUBJECT = 'subject';
+const NAME = 'name';
 
 describe('authUtils tests', () => {
 
@@ -17,11 +20,13 @@ describe('authUtils tests', () => {
 	it('Should throw error when subject in not user id format', async () => {
 
 		const payload = new JwtPayload(
+			JTI,
 			tokenInfo.issuer,
 			tokenInfo.audience,
-			'abc',
-			ACCESS_TOKEN_KEY,
-			tokenInfo.accessTokenValidityDays
+			SUBJECT,
+			tokenInfo.accessTokenValidityDays,
+			NAME,
+			[]
 		);
 
 		try {
@@ -34,11 +39,13 @@ describe('authUtils tests', () => {
 	it('Should throw error when access token key is different', async () => {
 
 		const payload = new JwtPayload(
+			JTI,
 			tokenInfo.issuer,
 			tokenInfo.audience,
 			new Types.ObjectId().toHexString(),
-			'123',
-			tokenInfo.accessTokenValidityDays
+			tokenInfo.accessTokenValidityDays,
+			NAME,
+			[]
 		);
 
 		try {
@@ -51,11 +58,13 @@ describe('authUtils tests', () => {
 	it('Should return true if all data is correct', async () => {
 
 		const payload = new JwtPayload(
+			JTI,
 			tokenInfo.issuer,
 			tokenInfo.audience,
 			new Types.ObjectId().toHexString(), // Random Key
-			ACCESS_TOKEN_KEY,
-			tokenInfo.accessTokenValidityDays
+			tokenInfo.accessTokenValidityDays,
+			NAME,
+			[]
 		);
 
 		const validatedPayload = validateTokenData(payload);
