@@ -21,7 +21,7 @@ Checks the health of the application
                 'status': 'I am OK! :)'
             }
 
-## Register a new user [/v1/register]
+## Register a new user [/api/v1/register]
 
 ### Registration [POST]
 
@@ -58,4 +58,26 @@ This allows creation of a new user for your blogging platform.
                         "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1OTczMzMxOTcsInBybSI6IjM1Mjg1NzhhY2FmN2JiMjE3ZGFjMGNmYzhlMTgxNjBlZGMyNzBmMWJmOTc0NDI2NGM1Y2IwODdiMWYwMWUxNjg0ZWRjMzY4MjJhYzcwOWJmYjZkYmVmNGI0ZDQyNzYxYmJiYTBkM2YxNTlkYWM4MjY3YWNmZmUwNGQ5ZTY2Mjk5In0.CgoEtalmCglEldEWq_2ERsqekOYNUUUihnyn_-iuKLpxrTmXrfR2q52n8LQcWs7HyfVuanj0-nIkcLzzR1_X8A"
                     }
                 }
+            }
+
+## Deregister a user [/api/v1/deregister]
+
+### DeRegistration [POST]
+
+This allows deregistration a user from your blogging platform. As long as the token is valid and is for the particular user. This user will be removed from the platform.
+
++ Request (application/json)
+
+    + Headers
+
+                Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "User deegistered"
             }
