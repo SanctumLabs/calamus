@@ -1,11 +1,29 @@
 import Keystore, { KeystoreModel } from './KeystoreModel';
 import { Types } from 'mongoose';
 import User from '@database/repository/user/UserModel';
+import logger from '@core/logger';
 
 export default class KeystoreRepository {
 
 	public static findforKey(client: User, key: string): Promise<Keystore> {
 		return KeystoreModel.findOne({ client: client, primaryKey: key, status: true }).exec();
+	}
+
+	public static findForUser(client: User): Promise<Keystore> {
+		return KeystoreModel.findOne({ client, status: true }).exec();
+	}
+
+	public static updateKeys(keystore: Keystore, primaryKey: string, secondaryKey: string): Promise<any> {
+		logger.debug(`Updating Keystore ${keystore._id}`);
+
+		const now = new Date();
+
+		return KeystoreModel.updateOne(
+			{ _id: keystore._id },
+			{ $set: { ...keystore, primaryKey, secondaryKey, updatedAt: now }, }
+		)
+		.lean()
+		.exec();
 	}
 
 	public static remove(id: Types.ObjectId): Promise<Keystore> {
