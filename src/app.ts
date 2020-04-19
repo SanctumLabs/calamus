@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import logger from '@logger';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import helmet from 'helmet';
 import { corsUrl, environment } from '@config';
 import { NotFoundError, ApiError, InternalError } from '@core/ApiError';
 import '@database'; // initialize database
@@ -12,6 +13,8 @@ process.on('uncaughtException', e => {
 });
 
 const app = express();
+
+app.use(helmet());
 
 app.disable('x-powered-by');
 app.use(bodyParser.json({ limit: '10mb' }));
