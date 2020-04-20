@@ -1,3 +1,4 @@
+# Reference:https://github.com/marketplace/actions/build-and-push-docker-images
 name: Docker Image CI
 
 on:
@@ -5,14 +6,41 @@ on:
     branches: [ master, beta, develop ]
 
 jobs:
+  build_application:
+    name: Build Server Binary
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Build Application
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
+      - run: npm install
+      - run: npm run build
+
+      - name: Upload build artifact
+        continue-on-error: false
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: build/server.js
 
   push_to_registries:
     name: Pushes Docker image to Dockerhub and Github Registry
+    needs: build_application
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout out repo
+    - name: Checkout
       uses: actions/checkout@v2
+      
+    - name: Download build artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: build
 
     - name: Push to Docker Hub
       uses: docker/build-push-action@v1
