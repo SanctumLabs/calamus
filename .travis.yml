@@ -18,6 +18,7 @@ cache:
   yarn: true
   directories:
     - "/node_modules/"
+    - "/node_modules/.cache/mongodb-memory-server/mongodb-binaries"
 
 jobs:
   include:

@@ -6,7 +6,7 @@ module.exports = {
   },
   moduleFileExtensions: ["ts", "js"],
   preset: "@shelf/jest-mongodb",
-  testEnvironment: "node",
+  // testEnvironment: "node",
   testMatch: [
     "<rootDir>/__tests__/**/*.{js,ts,tsx,jsx,mjs}",
     "<rootDir>/?(*.)(spec|test).{js,jsx,ts,tsx,mjs}",

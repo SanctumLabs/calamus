@@ -6700,7 +6700,7 @@ mongodb@3.5.5:
   optionalDependencies:
     saslprep "^1.0.0"
 
-mongodb@^3.5.4:
+mongodb@^3.5.4, mongodb@^3.5.6:
   version "3.5.6"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.5.6.tgz#a1be2d9796c8a8a5b0e6bcbc6baaaa406bd5c0d5"
   integrity sha512-sh3q3GLDLT4QmoDLamxtAECwC3RGjq+oNuK1ENV8+tnipIavss6sMYt77hpygqlMOCt0Sla5cl7H4SKCVBCGEg==
