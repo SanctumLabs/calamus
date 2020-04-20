@@ -1,11 +1,14 @@
 {
     "ignore": [
-      "node_modules"
+      "node_modules",
+      "**/*.test.ts",
+      "**/*.spec.ts"
     ],
     "watch": [
       "src",
+      "build",
       "yarn.lock"
     ],
-    "exec": "node -r dotenv/config build/server.js",
+    "exec": "npm run serve",
     "ext": "ts"
   }

@@ -13,17 +13,22 @@ export default class KeystoreRepository {
 		return KeystoreModel.findOne({ client, status: true }).exec();
 	}
 
-	public static updateKeys(keystore: Keystore, primaryKey: string, secondaryKey: string): Promise<any> {
+	public static updateKeys(keystore: Keystore, primaryKey: string, secondaryKey: string) {
 		logger.debug(`Updating Keystore ${keystore._id}`);
 
 		const now = new Date();
 
-		return KeystoreModel.updateOne(
-			{ _id: keystore._id },
-			{ $set: { ...keystore, primaryKey, secondaryKey, updatedAt: now }, }
-		)
-		.lean()
-		.exec();
+		keystore.primaryKey = primaryKey;
+		keystore.secondaryKey = secondaryKey;
+		keystore.updatedAt = now;
+
+		KeystoreModel.updateOne({ _id: keystore._id }, keystore, (err, result) => {
+			if (err) {
+				logger.error(`Failed with err ${err}`);
+			} else {
+				logger.debug(`Modified ${result.nModified} Keystore`);
+			}
+		});
 	}
 
 	public static remove(id: Types.ObjectId): Promise<Keystore> {

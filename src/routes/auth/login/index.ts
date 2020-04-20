@@ -51,7 +51,7 @@ export default router.post(
             }
 
             logger.debug(`Keystore ${keystore._id} for user ${user._id} found, updating...`);
-            await keystoreRepository.updateKeys(keystore, accessTokenKey, refreshTokenKey);
+            keystoreRepository.updateKeys(keystore, accessTokenKey, refreshTokenKey);
 
             new SuccessResponse('Login Success', {
                 user: pick(user, ['_id', 'name', 'roles', 'profilePicUrl']),
