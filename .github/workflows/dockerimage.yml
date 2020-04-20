@@ -10,15 +10,19 @@ jobs:
     name: Build Server Binary
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - continue-on-error: false
+
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Build Application
+        uses: actions/setup-node@v1
         with:
           node-version: 13
       - run: npm install
       - run: npm build
 
       - name: Upload build artifact
+        continue-on-error: false
         uses: actions/upload-artifact@v1
         with:
           name: build
