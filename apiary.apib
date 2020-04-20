@@ -81,3 +81,34 @@ This allows deregistration a user from your blogging platform. As long as the to
                 "statusCode": "10000",
                 "message": "User deegistered"
             }
+
+
+## Token Refresh [/api/v1/token/refresh]
+
+### Refresh expired Access Token [POST]
+
+This is used to issue new tokens when the access token has expired. In the body of the request, ensure you have the correct refresh token that was 
+issued alongside the expired access token.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+    
+    + Body
+
+            {
+                "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwYjQxNDYyZDUyODMyNDI2NDMzODNiNzZhY2Q5OTE4MzQ1YzJiMWU0YWRkMmMwMTM3Y2YxMjU4OWQ5MjkxNzUzM2FlZjJiZDk5NjZjZmYxNWUzZGM3MDIzYzg5Njg5NWJlNDc3ZmEwMjA2OTFkZDE0N2Q4OTg5NzRkMWRmYmY4OCIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTUsImV4cCI6MTU4NzY2NTk1NSwibmJmIjoxNTg3NDA2NzU1LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiJ9XX0.Ul4fIa6U9kGodd5FFKoDxKuxL7sfj3bug7h64WfogH5FUaq8WJJ5b10sFzC_qe7BllaM9hlthoo4trOmyAI3PQ",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Token Issued",
+                "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ODYzNGM4ZGMyNmYxNzZlMDU4OWIwMTk0OTFkZmZlZGMwZjg1YTY5NDlhNDUzNjlkZDEwZDYxNjZmYmZkNDI0MWE3YTQzZWQwMThjNGQwMjI4MjYxZjhkMTFkOGI2NjYzMGM1ODRkZTkxMzc4MmJmNWUzNTg5ZTdjZmI1YzJhOCIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTgsImV4cCI6MTU4NzQ5MzE1OCwibmJmIjoxNTg3NDA2NzU4LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiIsInN0YXR1cyI6dHJ1ZX1dfQ.jLC5ilEKKVm7-qa6edZ7adFQeWYA0RkjxYafO3ZiwKzT5q1tiHzpscPQvc2blpURqWNOHPjV2pr9leda02VMPA",
+                "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzExOGNkY2Y4N2M4Nzc2ZjZkYWU3YmMxMDkzMTBkNDgyOWE0ZjhiZmY4Yzc4MmMyZmRlMDdlMTVmNjA1YTM0YzExNjJhNDdiNTgyMDhjYTY4ZWZhYzU5MDUwZGEzOWUxM2ZmMDE0ZjRmMzNlOTE4Njc4MGRlMWJjOTFmOGM1NyIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTgsImV4cCI6MTU4NzY2NTk1OCwibmJmIjoxNTg3NDA2NzU4LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiIsInN0YXR1cyI6dHJ1ZX1dfQ.hgMr5ob2ZNWgs1quNrCwOi9ZCFKxs1R5--ShHtreKEyZC6q3ObbV1fFJB2V4COY3YebTW2bN1ufBwh3E-CH9Yg"
+            }
