@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express, { Request, Response } from 'express';
 import { SuccessResponse } from '@core/ApiResponse';
 import userRepository from '@repository/user';
 import { ProtectedRequest } from 'app-request';
@@ -61,5 +61,31 @@ router.get(
         }
     })
 );
+
+/*-------------------------------------------------------------------------*/
+// Below all APIs are private APIs protected for Access Token
+router.use('/', authentication);
+/*-------------------------------------------------------------------------*/
+
+router.get(
+    '/my',
+	asyncHandler(async (request: ProtectedRequest, response: Response, next) => {
+        try {
+            const user = await userRepository.findProfileById(request.user._id);
+
+            if (!user) {
+                throw new BadRequestError('User not registered');
+            }
+
+            return new SuccessResponse('success', pick(user, ['name', 'profilePicUrl', 'roles'])).send(response);
+        } catch (error) {
+            logger.error(`Failed to get profile ${error}`);
+            response.status(500).send({
+                message: error.message
+            });
+        }
+    })
+);
+
 
 export default router;
