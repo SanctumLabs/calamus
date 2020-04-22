@@ -112,3 +112,30 @@ issued alongside the expired access token.
                 "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ODYzNGM4ZGMyNmYxNzZlMDU4OWIwMTk0OTFkZmZlZGMwZjg1YTY5NDlhNDUzNjlkZDEwZDYxNjZmYmZkNDI0MWE3YTQzZWQwMThjNGQwMjI4MjYxZjhkMTFkOGI2NjYzMGM1ODRkZTkxMzc4MmJmNWUzNTg5ZTdjZmI1YzJhOCIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTgsImV4cCI6MTU4NzQ5MzE1OCwibmJmIjoxNTg3NDA2NzU4LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiIsInN0YXR1cyI6dHJ1ZX1dfQ.jLC5ilEKKVm7-qa6edZ7adFQeWYA0RkjxYafO3ZiwKzT5q1tiHzpscPQvc2blpURqWNOHPjV2pr9leda02VMPA",
                 "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzExOGNkY2Y4N2M4Nzc2ZjZkYWU3YmMxMDkzMTBkNDgyOWE0ZjhiZmY4Yzc4MmMyZmRlMDdlMTVmNjA1YTM0YzExNjJhNDdiNTgyMDhjYTY4ZWZhYzU5MDUwZGEzOWUxM2ZmMDE0ZjRmMzNlOTE4Njc4MGRlMWJjOTFmOGM1NyIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTgsImV4cCI6MTU4NzY2NTk1OCwibmJmIjoxNTg3NDA2NzU4LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiIsInN0YXR1cyI6dHJ1ZX1dfQ.hgMr5ob2ZNWgs1quNrCwOi9ZCFKxs1R5--ShHtreKEyZC6q3ObbV1fFJB2V4COY3YebTW2bN1ufBwh3E-CH9Yg"
             }
+            
+            
+## Profile by ID [/api/v1/profile/public/id/{id}]
+
+### Get a user's profile by their ID [GET]
+
+Allows getting a users public profile given that we have their ID
+
++ Request (application/json)
+
+    + Parameters
+        
+        + id (string) - ID of registered user. This will be available in the response when registering a user
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "name": "Dredd",
+                    "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                }
+            }
