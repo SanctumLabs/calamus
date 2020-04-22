@@ -9,7 +9,7 @@ import '@database'; // initialize database
 import routes from '@routes';
 
 process.on('uncaughtException', e => {
-    logger.error(e);
+    logger.error(`UncaughtException ${e}`);
 });
 
 const app = express();
@@ -62,7 +62,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 		ApiError.handle(err, res);
 	} else {
 		if (environment === 'development') {
-			logger.error(err);
+			logger.error(`Failure Registered Name: ${err.name}, message: ${err.message}`);
 			return res.status(500).send(err.message);
 		}
 		ApiError.handle(new InternalError(), res);
