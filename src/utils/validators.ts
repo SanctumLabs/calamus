@@ -8,7 +8,7 @@ export enum ValidationSource {
     BODY = 'body',
     HEADER = 'headers',
     QUERY = 'query',
-    PARAM = 'param'
+    PARAM = 'params'
 }
 
 /**
@@ -57,7 +57,7 @@ export default (schema: Joi.ObjectSchema, source: ValidationSource = ValidationS
 
 			const { details } = error;
 			const message = details.map(i => i.message.replace(/['"]+/g, '')).join(',');
-			logger.error(message);
+			logger.error(`ValidationError: ${message}`);
 
 			next(new BadRequestError(message));
 		} catch (error) {
