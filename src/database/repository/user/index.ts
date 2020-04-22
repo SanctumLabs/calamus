@@ -47,6 +47,10 @@ export default class UserRepository {
 		return UserModel.findOne({ _id: id, status: true }).lean<User>().exec();
 	}
 
+	public static findPublicProfileByName(name: string): Promise<User> {
+		return UserModel.findOne({ name: name, status: true }).lean<User>().exec();
+	}
+
 	public static async create(user: User, accessTokenKey: string, refreshTokenKey: string, roleCode: string)
 		: Promise<{ user: User, keystore: Keystore }> {
 		const now = new Date();

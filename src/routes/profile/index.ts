@@ -38,4 +38,28 @@ router.get(
 );
 
 
+/**
+ * Endpoint to get public profile for the given name
+ */
+router.get(
+    '/public/u/:name',
+    validator(schema.username, ValidationSource.PARAM),
+    asyncHandler(async (request: ProtectedRequest, response) => {
+        try {
+            const user = await userRepository.findPublicProfileByName(request.params.name);
+
+            if (!user) {
+                throw new BadRequestError('User not registered');
+            }
+
+            return new SuccessResponse('success', pick(user, ['name', 'profilePicUrl'])).send(response);
+        } catch (error) {
+            logger.error(`Failed to get public profile of user ${request.params.name} with err ${error}`);
+            response.send({
+                message: error.message
+            });
+        }
+    })
+);
+
 export default router;
