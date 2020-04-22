@@ -196,3 +196,42 @@ Allows getting a users private profile. This is a secured endpoint and requires 
                     ]
                 }
             }
+
+
+## Update a user profile [/api/v1/profile]
+
+### Updates a user profile [PATCH]
+
+Allows a user to update their profile with name and profilePicUrl
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Body
+
+            {
+                "name": "Judge Dredd",
+                "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Profile updated",
+                "data": {
+                    "name": "Judge Dredd",
+                    "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4",
+                    "roles": [
+                        {
+                            "_id": "5e96f312daf769d5681cd7cf",
+                            "code": "ADMIN"
+                        }
+                    ]
+                }
+            }
