@@ -68,16 +68,16 @@ export default class BlogRepository {
 			.exec();
 	}
 
-	public static findByUrl(blogUrl: string): Promise<Blog> {
-		return BlogModel.findOne({ blogUrl: blogUrl, status: true })
+	public static findByUrl(slug: string): Promise<Blog> {
+		return BlogModel.findOne({ slug, status: true })
 			.select('+text')
 			.populate('author', this.AUTHOR_DETAIL)
 			.lean<Blog>()
 			.exec();
 	}
 
-	public static findUrlIfExists(blogUrl: string): Promise<Blog> {
-		return BlogModel.findOne({ blogUrl: blogUrl }).lean<Blog>().exec();
+	public static findUrlIfExists(slug: string): Promise<Blog> {
+		return BlogModel.findOne({ slug }).lean<Blog>().exec();
 	}
 
 	public static findByTagAndPaginated(tag: string, pageNumber: number, limit: number): Promise<Blog[]> {

@@ -8,7 +8,6 @@ import { BadTokenError } from '@core/ApiError';
 import JWT, { JwtPayload } from '@jwt';
 import { tokenInfo } from '@config';
 
-export const LEARNER_ROLE_ID = new Types.ObjectId(); // random id
 export const WRITER_ROLE_ID = new Types.ObjectId(); // random id
 export const EDITOR_ROLE_ID = new Types.ObjectId(); // random id
 
@@ -19,23 +18,15 @@ export const WRITER_ACCESS_TOKEN = 'def';
 export const EDITOR_ACCESS_TOKEN = 'ghi';
 
 export const mockUserFindById = jest.fn(async (id: Types.ObjectId) => {
-	if (USER_ID.equals(id)) return <User>{
-		_id: USER_ID,
-		roles: [
-			<Role>{ _id: LEARNER_ROLE_ID, code: RoleCode.LEARNER },
-		]
-	};
 	if (USER_ID_WRITER.equals(id)) return <User>{
 		_id: USER_ID_WRITER,
 		roles: [
-			<Role>{ _id: LEARNER_ROLE_ID, code: RoleCode.LEARNER },
 			<Role>{ _id: WRITER_ROLE_ID, code: RoleCode.WRITER },
 		]
 	};
 	if (USER_ID_EDITOR.equals(id)) return <User>{
 		_id: USER_ID_EDITOR,
 		roles: [
-			<Role>{ _id: LEARNER_ROLE_ID, code: RoleCode.LEARNER },
 			<Role>{ _id: WRITER_ROLE_ID, code: RoleCode.EDITOR },
 		]
 	};
@@ -53,11 +44,6 @@ export const mockRoleRepoFindByCode = jest.fn(
 			case RoleCode.EDITOR: return <Role>{
 				_id: EDITOR_ROLE_ID,
 				code: RoleCode.EDITOR,
-				status: true
-			};
-			case RoleCode.LEARNER: return <Role>{
-				_id: LEARNER_ROLE_ID,
-				code: RoleCode.LEARNER,
 				status: true
 			};
 		}

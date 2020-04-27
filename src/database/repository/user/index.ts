@@ -4,6 +4,7 @@ import { InternalError } from '@core/ApiError';
 import { Types } from 'mongoose';
 import keystoreRepository from '@repository/keystore';
 import Keystore from '@repository/keystore/KeystoreModel';
+import logger from '@core/logger';
 
 export default class UserRepository {
 

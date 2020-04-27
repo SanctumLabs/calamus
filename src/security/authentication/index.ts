@@ -9,11 +9,12 @@ import schema from '../schema';
 import asyncHandler from '@utils/asyncHandler';
 import JWT from '@jwt';
 import { getAccessToken, validateTokenData } from '@authUtils';
+import logger from '@logger';
 
 const router = express.Router();
 
 /**
- * Checks if a user is authenticated before thet can access a route
+ * Checks if a user is authenticated before they can access a route
  */
 export default router.use(
     validator(schema.auth, ValidationSource.HEADER),
@@ -32,7 +33,7 @@ export default router.use(
 
             request.user = user;
 
-            const keystore = keystoreRepository.findforKey(request.user._id, payload.jti);
+            const keystore = await keystoreRepository.findforKey(request.user._id, payload.jti);
 
             if (!keystore) {
                 throw new AuthFailureError('Invalid access token');
@@ -43,9 +44,11 @@ export default router.use(
 
             return next();
         } catch (error) {
+            logger.error(`Auth Failed error: ${error}`);
             if (error instanceof TokenExpiredError) {
                 throw new AccessTokenError(error.message);
             }
+            throw new Error(error.message);
         }
     })
 );

@@ -12,9 +12,8 @@ export default interface Blog extends Document {
 	tags: string[];
 	author: User;
 	imgUrl?: string;
-	blogUrl: string;
+	slug: string;
 	likes?: number;
-	score: number;
 	isSubmitted: boolean;
 	isDraft: boolean;
 	isPublished: boolean;
@@ -67,7 +66,7 @@ const schema = new Schema(
 			maxlength: 500,
 			trim: true
 		},
-		blogUrl: {
+		slug: {
 			type: Schema.Types.String,
 			required: true,
 			unique: true,
@@ -77,12 +76,6 @@ const schema = new Schema(
 		likes: {
 			type: Schema.Types.Number,
 			default: 0
-		},
-		score: {
-			type: Schema.Types.Number,
-			default: 0.01,
-			max: 1,
-			min: 0
 		},
 		isSubmitted: {
 			type: Schema.Types.Boolean,
