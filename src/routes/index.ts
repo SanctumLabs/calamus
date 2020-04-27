@@ -3,6 +3,7 @@ import register from './auth/register';
 import deregister from './auth/deregister';
 import login from './auth/login';
 import token from './auth/token';
+import writer from './blog/writer';
 import profile from './profile';
 import authentication from '@authentication';
 import role from '@utils/role';
@@ -21,5 +22,5 @@ router.use('/v1/token', token);
 router.use('/v1/token', token);
 router.use('/v1/profile', profile);
 
-router.use('/v1/writer/blog', authentication, role(RoleCode.WRITER), authorization, profile);
+router.use('/v1/writer/blog', authentication, role(RoleCode.WRITER), authorization, writer);
 export default router;

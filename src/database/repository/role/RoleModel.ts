@@ -4,7 +4,6 @@ export const DOCUMENT_NAME = 'Role';
 export const COLLECTION_NAME = 'roles';
 
 export const enum RoleCode {
-	LEARNER = 'LEARNER',
 	WRITER = 'WRITER',
 	EDITOR = 'EDITOR',
 	ADMIN = 'ADMIN',
@@ -23,7 +22,6 @@ const schema = new Schema(
 			type: Schema.Types.String,
 			required: true,
 			enum: [
-				RoleCode.LEARNER,
 				RoleCode.WRITER,
 				RoleCode.EDITOR,
 				RoleCode.ADMIN,

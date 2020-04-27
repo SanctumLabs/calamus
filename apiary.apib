@@ -25,16 +25,16 @@ Checks the health of the application
 
 ### Registration [POST]
 
-This allows creation of a new user for your blogging platform.
+This allows creation of a new user for your blogging platform. Roles could either be _writer_, _admin_, or _editor_
 
 + Request (application/json)
 
-        {
-            'name' : 'Dredd',
-            'email': 'drdredd@calamus.com',
-            'password': 'guns-and-knives',
-            'profilePicUrl': 'https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4'
-        }
+    + Attributes
+        + name: Dredd (required) 
+        + email: drdredd@calamus.com (required)
+        + password: guns-and-knives (required)
+        + profilePicUrl: https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg (required)
+        + role: writer (required)
 
 + Response 201 (application/json)
 
@@ -49,9 +49,9 @@ This allows creation of a new user for your blogging platform.
                         "name": "Dredd",
                         "email": "drdredd@calamus.com",
                         "roles": [
-                            "5e96f312daf769d5681cd7cf"
+                            "5e96f312daf769d5681cd7cd"
                         ],
-                        "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg"
                     },
                     "tokens": {
                         "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw",
@@ -135,7 +135,7 @@ Allows getting a users public profile given that we have their ID
                 "message": "success",
                 "data": {
                     "name": "Dredd",
-                    "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg"
                 }
             }
   
@@ -161,7 +161,7 @@ Allows getting a users public profile given that we have their name
                 "message": "success",
                 "data": {
                     "name": "Dredd",
-                    "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg"
                 }
             }
 
@@ -187,7 +187,7 @@ Allows getting a users private profile. This is a secured endpoint and requires 
                 "message": "success",
                 "data": {
                     "name": "Dredd",
-                    "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4",
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg",
                     "roles": [
                         {
                             "_id": "5e96f312daf769d5681cd7cf",
@@ -214,7 +214,7 @@ Allows a user to update their profile with name and profilePicUrl
 
             {
                 "name": "Judge Dredd",
-                "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4",
+                "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg",
             }
 
 + Response 200 (application/json)
@@ -226,7 +226,7 @@ Allows a user to update their profile with name and profilePicUrl
                 "message": "Profile updated",
                 "data": {
                     "name": "Judge Dredd",
-                    "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4",
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg",
                     "roles": [
                         {
                             "_id": "5e96f312daf769d5681cd7cf",
@@ -235,3 +235,61 @@ Allows a user to update their profile with name and profilePicUrl
                     ]
                 }
             }
+
+## Writer create a blog [/api/v1/writer/blog]
+
+### Creates a new blog post [POST]
+
+Allows users with writer roles to create blogs
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Body
+
+            {
+                "title": "Introduction to Node.js and How Node.js works?",
+                "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                "text": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                "slug": "introduction-to-node-js-and-how-node-js-works",
+                "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                "tags": [
+                    "NODEJS",
+                    "BACKEND"
+                ]
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog created successfully",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": false,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+

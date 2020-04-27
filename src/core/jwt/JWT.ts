@@ -103,8 +103,11 @@ export default class JWT {
 			// @ts-ignore
 			return <JwtPayload>await promisify(verify)(token, cert);
 		} catch (e) {
-			logger.debug(e);
-			if (e && e.name === 'TokenExpiredError') throw new TokenExpiredError();
+			if (e && e.name === 'TokenExpiredError') {
+				logger.error(`JWT Validation Err: ${e}`);
+				throw new TokenExpiredError();
+			}
+			logger.error(`JWT Validation Err: Token not encrypted ${e}`);
 			// throws error if the token has not been encrypted by the private key
 			throw new BadTokenError();
 		}

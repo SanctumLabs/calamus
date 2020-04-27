@@ -41,7 +41,7 @@ router.post('',
                 email: request.body.email,
                 profilePicUrl: request.body.profilePicUrl,
                 password: passwordHash
-            }, accessTokenKey, refreshTokenKey, RoleCode.ADMIN);
+            }, accessTokenKey, refreshTokenKey, request.body.role.toUpperCase());
 
             try {
                 const tokens = await createTokens(createdUser, keystore.primaryKey, keystore.secondaryKey);
