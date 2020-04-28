@@ -1,4 +1,4 @@
-import express, { NextFunction, Response } from 'express';
+import express, { Response } from 'express';
 import asyncHandler from '@utils/asyncHandler';
 import { ProtectedRequest } from 'app-request';
 import userRepository from '@repository/user';
@@ -13,31 +13,29 @@ const router = express.Router();
  * Deregister users
  */
 router.delete(
-    '',
-    asyncHandler(async (req: ProtectedRequest, res: Response, next: NextFunction) => {
-        try {
-            const user = await userRepository.findByEmail(req.user.email);
+  '',
+  asyncHandler(async (req: ProtectedRequest, res: Response) => {
+    try {
+      const user = await userRepository.findByEmail(req.user.email);
 
-            if (!user) {
-                logger.error(`User with email ${req.user.email} not found`);
-                throw new BadRequestError('User does not exist');
-            }
+      if (!user) {
+        logger.error(`User with email ${req.user.email} not found`);
+        throw new BadRequestError('User does not exist');
+      }
 
-            logger.warn(`Deleting user ${req.user.email} ...`);
+      logger.warn(`Deleting user ${req.user.email} ...`);
 
-            await KeystoreRepository.remove(req.keystore._id);
-            await userRepository.removeUser(req.user);
+      await KeystoreRepository.remove(req.keystore._id);
+      await userRepository.removeUser(req.user);
 
-            new SuccessMsgResponse('User deregistered').send(res);
-        } catch (error) {
-            logger.error(`Failed with ${error}`);
-            res.status(400).send(
-                {
-                    'message': error.message
-                }
-            );
-        }
-    })
+      new SuccessMsgResponse('User deregistered').send(res);
+    } catch (error) {
+      logger.error(`Failed with ${error}`);
+      res.status(400).send({
+        message: error.message,
+      });
+    }
+  }),
 );
 
 export default router;

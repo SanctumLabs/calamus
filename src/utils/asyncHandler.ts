@@ -6,12 +6,16 @@ import logger from '@logger';
  */
 type AsyncFunction = (request: Request, response: Response, next: NextFunction) => Promise<any>;
 
-export default(execution: AsyncFunction) => (request: Request, response: Response, next: NextFunction) => {
-    try {
-        logger.debug(`AsyncHandler execution...`);
-        execution(request, response, next);
-    } catch (error) {
-        logger.error(`AsyncHandler Err: ${error}`);
-        throw new Error(error.message);
-    }
+export default (execution: AsyncFunction) => (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
+  try {
+    logger.debug(`AsyncHandler execution...`);
+    execution(request, response, next);
+  } catch (error) {
+    logger.error(`AsyncHandler Err: ${error}`);
+    throw new Error(error.message);
+  }
 };

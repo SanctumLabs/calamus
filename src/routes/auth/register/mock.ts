@@ -10,24 +10,29 @@ export const USER_PROFILE_PIC = 'https://abc.com/xyz';
 
 export const bcryptHashSpy = jest.spyOn(bcrypt, 'hash');
 
-export const mockUserCreate = jest.fn(async (user: User, accessTokenKey: string, refreshTokenKey: string, roleCode: string)
-	: Promise<{ user: User, keystore: Keystore }> => {
-	user._id = new Types.ObjectId();
-	user.roles = [];
-	return {
-		user: user,
-		keystore: <Keystore>{
-			_id: new Types.ObjectId(),
-			client: user,
-			primaryKey: 'abc',
-			secondaryKey: 'xyz'
-		}
-	};
-});
+export const mockUserCreate = jest.fn(
+  async (user: User): Promise<{ user: User; keystore: Keystore }> => {
+    user._id = new Types.ObjectId();
+    user.roles = [];
+    return {
+      user: user,
+      keystore: {
+        _id: new Types.ObjectId(),
+        client: user,
+        primaryKey: 'abc',
+        secondaryKey: 'xyz',
+      } as Keystore,
+    };
+  },
+);
 
 export const cryptoRandomBytesSpy = jest.spyOn(crypto, 'randomBytes');
 
 jest.mock('@repository/user', () => ({
-	get findByEmail() { return mockUserFindByEmail; }, // utilising already defined mock
-	get create() { return mockUserCreate; }
+  get findByEmail() {
+    return mockUserFindByEmail;
+  }, // utilising already defined mock
+  get create() {
+    return mockUserCreate;
+  },
 }));

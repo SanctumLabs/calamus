@@ -8,8 +8,8 @@ import { NotFoundError, ApiError, InternalError } from '@core/ApiError';
 import '@database'; // initialize database
 import routes from '@routes';
 
-process.on('uncaughtException', e => {
-    logger.error(`UncaughtException ${e}`);
+process.on('uncaughtException', (e) => {
+  logger.error(`UncaughtException ${e}`);
 });
 
 const app = express();
@@ -24,30 +24,34 @@ app.use(cors({ origin: corsUrl, optionsSuccessStatus: 200 }));
 // health route
 // log all incoming requests
 app.use(async (request: Request, response: Response, next: NextFunction) => {
-	const start = Date.now();
+  const start = Date.now();
 
-	// this will pause the control flow until the endpoint handler is resolved
-	await next();
-	const responseTime = Date.now() - start;
-	logger.info(`Method: ${request.method}, StatusCode: ${response.statusCode}, URL: ${request.url}, - ResponseTime: ${responseTime} ms`);
+  // this will pause the control flow until the endpoint handler is resolved
+  await next();
+  const responseTime = Date.now() - start;
+  logger.info(
+    `Method: ${request.method}, StatusCode: ${response.statusCode}, URL: ${request.url}, - ResponseTime: ${responseTime} ms`,
+  );
 });
 
 // apply default header responses
 app.use(async (request: Request, response: Response, next: NextFunction) => {
-	response.set({
-		'Content-Type': 'application/json',
-		'X-Frame-Options': 'DENY',
-		'X-Content-Type-Options': 'nosniff',
-		'X-XSS-Protection': '1; mode=block'
-	});
-	await next();
+  response.set({
+    'Content-Type': 'application/json',
+    'X-Frame-Options': 'DENY',
+    'X-Content-Type-Options': 'nosniff',
+    'X-XSS-Protection': '1; mode=block',
+  });
+  await next();
 });
 
 // health endpoint
-app.get('/health', async (request: Request, response: Response, next: NextFunction) => {
-	return response.json({
-		status: 'I am OK! :)'
-	}).status(200);
+app.get('/health', async (request: Request, response: Response) => {
+  return response
+    .json({
+      status: 'I am OK! :)',
+    })
+    .status(200);
 });
 
 // use routes
@@ -57,16 +61,16 @@ app.use('/api/', routes);
 app.use((req, res, next) => next(new NotFoundError()));
 
 // Middleware Error Handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	if (err instanceof ApiError) {
-		ApiError.handle(err, res);
-	} else {
-		if (environment === 'development') {
-			logger.error(`Failure Registered Name: ${err.name}, message: ${err.message}`);
-			return res.status(500).send(err.message);
-		}
-		ApiError.handle(new InternalError(), res);
-	}
+app.use((err: Error, req: Request, res: Response) => {
+  if (err instanceof ApiError) {
+    ApiError.handle(err, res);
+  } else {
+    if (environment === 'development') {
+      logger.error(`Failure Registered Name: ${err.name}, message: ${err.message}`);
+      return res.status(500).send(err.message);
+    }
+    ApiError.handle(new InternalError(), res);
+  }
 });
 
 export default app;

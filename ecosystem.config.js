@@ -1,14 +1,15 @@
 module.exports = {
   apps: [
     {
-      name: "calamusApi",
-      script: "server.js",
+      name: 'calamusApi',
+      script: 'server.js',
       watch: true,
       env: {
-        NODE_ENV: "production",
+        NODE_ENV: 'production',
       },
-      instances: "max",
-      exec_mode: "cluster",
+      instances: 'max',
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      exec_mode: 'cluster',
     },
   ],
 };
