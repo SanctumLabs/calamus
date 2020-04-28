@@ -13,18 +13,19 @@ const router = express.Router();
  * This is used to validate each request and check if the api key can be found
  * in the database. Throws a ForbiddenError if the api key can't be found
  */
-export default router.use(validator(schema.apiKey, ValidationSource.HEADER),
-    asyncHandler(async (request: PublicRequest, res, next) => {
-        request.apiKey = request.headers['api-key'].toString();
-        const apiKey = await apiKeyRepository.findByKey(request.apiKey);
+export default router.use(
+  validator(schema.apiKey, ValidationSource.HEADER),
+  asyncHandler(async (request: PublicRequest, res, next) => {
+    request.apiKey = request.headers['api-key'].toString();
+    const apiKey = await apiKeyRepository.findByKey(request.apiKey);
 
-        logger.info(`Found API Key ${apiKey}`);
+    logger.info(`Found API Key ${apiKey}`);
 
-        if (!apiKey) {
-            logger.warn('API Key not found');
-            throw new ForbiddenError();
-        }
+    if (!apiKey) {
+      logger.warn('API Key not found');
+      throw new ForbiddenError();
+    }
 
-        return next();
-    })
+    return next();
+  }),
 );

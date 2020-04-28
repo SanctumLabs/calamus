@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { MongoClient } = require("mongodb");
+const mongoose = require('mongoose');
+const { MongoClient } = require('mongodb');
 
 mongoose.connect(
   global.__MONGO_URI__,
@@ -12,11 +12,12 @@ mongoose.connect(
       console.error(`Failed to setup mock mongodb with error ${err}`);
       process.exit(1);
     }
-  }
+  },
 );
 
-describe("insert", () => {
+describe('insert', () => {
   let connection;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let db;
 
   beforeAll(async () => {

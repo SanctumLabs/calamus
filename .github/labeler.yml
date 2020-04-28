@@ -58,3 +58,9 @@ test:
   - src/**/*.test.(ts|js)
   - src/**/*.spec.(js|ts)
   - jest.config.js
+
+linting:
+  - .prettierrc
+  - .prettierignore
+  - .eslintignore
+  - .eslintrc
