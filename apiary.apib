@@ -293,3 +293,85 @@ Allows users with writer roles to create blogs
                 }
             }
 
+## Writer update a blog [/api/v1/writer/blog/{ID}]
+
+### Updates an existing blog [PATCH]
+
+Allows users with writer roles to update *THEIR* already created blog post. This example demonstrates updating only the title.
+
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + ID (string) - id of the blog to update
+
+    + Body
+
+            {
+                "title": "How NodeJS works."
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog updated successfully",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": false,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "How NodeJS works.",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+
+
+# Data Structures
+
+## BlogResponse (object)
+
++ tags (array) - tags this blog can be categorized into. Array of strings
++ likes (number) - Number of likes this blog has received
++ isSubmitted (boolean) - Whether the blog has been submitted
++ isDraft (boolean) - Whether the blog is a draft
++ isPublished (boolean) - whether the blog has been published
++ status (boolean) - Whether the blog is ready for any operation
++ _id (string) - Id of the blog
++ title (string) - Title of the blog
++ description (string) - Description of the blog
++ draftText (string) - Draft text of the blog
++ author (Author) - Author of this blog post,
++ slug (string) - Slug url of this blog post
++ imgUrl (string) - Image URL of the blog post
++ createdBy (string) - Author who created this blog
++ updatedBy (string) - Author who updated this blog
++ createdAt (string) - timestamp indicating when this blog post was created
++ updatedAt (string) - timestamp indicating when this blog post was updated
+
+## Author (object)
+
++ _id (string) - Id of the author
++ name (string) - Name of the author
++ profilePicUrl (string) - Profile Pic url of the user

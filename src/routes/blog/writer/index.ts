@@ -7,8 +7,8 @@ import Blog from '@repository/blog/BlogModel';
 import { Types } from 'mongoose';
 import validator, { ValidationSource } from '@utils/validators';
 import schema from './schema';
+import idSchema from '../schema';
 import asyncHandler from '@utils/asyncHandler';
-import _ from 'lodash';
 import logger from '@logger';
 
 const router = express.Router();
@@ -53,6 +53,53 @@ router.post(
       logger.error(`Error encountered while creating blog ${error}`);
       response.send({
         message: error.message,
+      });
+    }
+  }),
+);
+
+router.patch(
+  '/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  validator(schema.update),
+  asyncHandler(async (request: ProtectedRequest, response) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(request.params.id));
+
+      if (!blog) {
+        throw new BadRequestError('Blog does not exist');
+      }
+
+      if (!blog.author._id.equals(request.user._id)) {
+        throw new ForbiddenError('You do not have the necessary permissions');
+      }
+
+      if (request.body.slug) {
+        const endpoint = formatEndpoint(request.body.slug);
+
+        const existingSlug = await blogRepository.findBySlug(endpoint);
+
+        if (existingSlug) {
+          throw new BadRequestError('Blog Slug already used');
+        }
+
+        blog.slug = endpoint;
+      }
+
+      // only update the requred fields if available
+      if (request.body.title) blog.title = request.body.title;
+      if (request.body.description) blog.description = request.body.description;
+      if (request.body.text) blog.draftText = request.body.text;
+      if (request.body.tags) blog.tags = request.body.tags;
+      if (request.body.imgUrl) blog.imgUrl = request.body.imgUrl;
+
+      await blogRepository.update(blog);
+
+      new SuccessResponse('Blog updated successfully', blog).send(response);
+    } catch (error) {
+      logger.error(`Failed to update blog Err: ${error}`);
+      response.send({
+        error: error.message,
       });
     }
   }),

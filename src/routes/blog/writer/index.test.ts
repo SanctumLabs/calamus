@@ -39,7 +39,7 @@ describe('Writer blog create routes', () => {
       request.post(endpoint).send({
         description: 'description',
         text: 'text',
-        blogUrl: 'blogUrl',
+        slug: 'slug',
       }),
       WRITER_ACCESS_TOKEN,
     );
@@ -55,7 +55,7 @@ describe('Writer blog create routes', () => {
       request.post(endpoint).send({
         title: 'title',
         text: 'text',
-        blogUrl: 'blogUrl',
+        slug: 'slug',
       }),
       WRITER_ACCESS_TOKEN,
     );
@@ -71,7 +71,7 @@ describe('Writer blog create routes', () => {
       request.post(endpoint).send({
         title: 'title',
         description: 'description',
-        blogUrl: 'blogUrl',
+        slug: 'slug',
       }),
       WRITER_ACCESS_TOKEN,
     );
@@ -82,7 +82,7 @@ describe('Writer blog create routes', () => {
     expect(mockBlogCreate).not.toBeCalled();
   });
 
-  it('Should send error if blog blogUrl not sent', async () => {
+  it('Should send error if blog slug not sent', async () => {
     const response = await addAuthHeaders(
       request.post(endpoint).send({
         title: 'title',
@@ -92,24 +92,24 @@ describe('Writer blog create routes', () => {
       WRITER_ACCESS_TOKEN,
     );
     expect(response.status).toBe(400);
-    expect(response.body.message).toMatch(/blogUrl/i);
+    expect(response.body.message).toMatch(/slug/i);
     expect(response.body.message).toMatch(/required/i);
     expect(mockBlogFindUrlIfExists).not.toBeCalled();
     expect(mockBlogCreate).not.toBeCalled();
   });
 
-  it('Should send error if blog blogUrl is not in accepted format', async () => {
+  it('Should send error if blog slug is not in accepted format', async () => {
     const response = await addAuthHeaders(
       request.post(endpoint).send({
         title: 'title',
         description: 'description',
         text: 'text',
-        blogUrl: 'https://abc.com/xyz',
+        slug: 'https://abc.com/xyz',
       }),
       WRITER_ACCESS_TOKEN,
     );
     expect(response.status).toBe(400);
-    expect(response.body.message).toMatch(/blogUrl/i);
+    expect(response.body.message).toMatch(/slug/i);
     expect(response.body.message).toMatch(/invalid/i);
     expect(mockBlogFindUrlIfExists).not.toBeCalled();
     expect(mockBlogCreate).not.toBeCalled();
@@ -121,7 +121,7 @@ describe('Writer blog create routes', () => {
         title: 'title',
         description: 'description',
         text: 'text',
-        blogUrl: 'blogUrl',
+        slug: 'slug',
         imgUrl: 'abc',
       }),
       WRITER_ACCESS_TOKEN,
@@ -133,30 +133,13 @@ describe('Writer blog create routes', () => {
     expect(mockBlogCreate).not.toBeCalled();
   });
 
-  it('Should send error if blog score is invalid', async () => {
-    const response = await addAuthHeaders(
-      request.post(endpoint).send({
-        title: 'title',
-        description: 'description',
-        text: 'text',
-        blogUrl: 'blogUrl',
-        score: 'abc',
-      }),
-      WRITER_ACCESS_TOKEN,
-    );
-    expect(response.status).toBe(400);
-    expect(response.body.message).toMatch(/must be a number/i);
-    expect(mockBlogFindUrlIfExists).not.toBeCalled();
-    expect(mockBlogCreate).not.toBeCalled();
-  });
-
   it('Should send error if blog tags is invalid', async () => {
     const response = await addAuthHeaders(
       request.post(endpoint).send({
         title: 'title',
         description: 'description',
         text: 'text',
-        blogUrl: 'blogUrl',
+        slug: 'slug',
         tags: 'abc',
       }),
       WRITER_ACCESS_TOKEN,
@@ -168,13 +151,13 @@ describe('Writer blog create routes', () => {
     expect(mockBlogCreate).not.toBeCalled();
   });
 
-  it('Should send error if blog already exists for blogUrl', async () => {
+  it('Should send error if blog already exists for slug', async () => {
     const response = await addAuthHeaders(
       request.post(endpoint).send({
         title: 'title',
         description: 'description',
         text: 'text',
-        blogUrl: BLOG_URL,
+        slug: BLOG_URL,
       }),
       WRITER_ACCESS_TOKEN,
     );
@@ -190,7 +173,7 @@ describe('Writer blog create routes', () => {
         title: 'title',
         description: 'description',
         text: 'text',
-        blogUrl: 'blogUrl',
+        slug: 'slug',
         imgUrl: 'https://abc.com/xyz',
         score: 0.01,
         tags: ['ABC'],
@@ -212,7 +195,7 @@ describe('Writer blog submit routes', () => {
   });
 
   const request = supertest(app);
-  const endpoint = '/v1/writer/blog/submit/';
+  const endpoint = '/api/v1/writer/blog/submit/';
 
   it('Should send error if submit blog id is not valid', async () => {
     const response = await addAuthHeaders(request.put(endpoint + 'abc'), WRITER_ACCESS_TOKEN);
@@ -253,7 +236,7 @@ describe('Writer blog withdraw routes', () => {
   });
 
   const request = supertest(app);
-  const endpoint = '/v1/writer/blog/withdraw/';
+  const endpoint = '/api/v1/writer/blog/withdraw/';
 
   it('Should send error if withdraw blog id is not valid', async () => {
     const response = await addAuthHeaders(request.put(endpoint + 'abc'), WRITER_ACCESS_TOKEN);
@@ -294,7 +277,7 @@ describe('Writer blog delete routes', () => {
   });
 
   const request = supertest(app);
-  const endpoint = '/v1/writer/blog/id/';
+  const endpoint = '/api/v1/writer/blog/';
 
   it('Should send error if deleting blog id is not valid', async () => {
     const response = await addAuthHeaders(request.delete(endpoint + 'abc'), WRITER_ACCESS_TOKEN);
@@ -334,7 +317,7 @@ describe('Writer blog get by id routes', () => {
   });
 
   const request = supertest(app);
-  const endpoint = '/v1/writer/blog/id/';
+  const endpoint = '/api/v1/writer/blog/';
 
   it('Should send error if fetching blog id is not valid', async () => {
     const response = await addAuthHeaders(request.get(endpoint + 'abc'), WRITER_ACCESS_TOKEN);

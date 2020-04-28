@@ -71,7 +71,7 @@ export default class BlogRepository {
       .exec();
   }
 
-  public static findByUrl(slug: string): Promise<Blog> {
+  public static findBySlug(slug: string): Promise<Blog> {
     return BlogModel.findOne({ slug, status: true })
       .select('+text')
       .populate('author', this.AUTHOR_DETAIL)
