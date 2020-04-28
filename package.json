@@ -3,7 +3,7 @@
   "private": false,
   "description": "express blog api",
   "main": "server.js",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "repository": "git@github.com:Wyvarn/calamus.git",
   "author": "BrianLusina <12752833+BrianLusina@users.noreply.github.com>",
   "license": "MIT",
