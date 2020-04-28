@@ -60,8 +60,9 @@ export default (schema: Joi.ObjectSchema, source: ValidationSource = ValidationS
     const message = details.map((i) => i.message.replace(/['"]+/g, '')).join(',');
     logger.error(`ValidationError: ${message}`);
 
-    next(new BadRequestError(message));
+    throw new BadRequestError(message);
   } catch (error) {
+    logger.error(`ValidationError: ${error}`);
     next(error);
   }
 };

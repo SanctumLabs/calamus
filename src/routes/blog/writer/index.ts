@@ -58,6 +58,10 @@ router.post(
   }),
 );
 
+/**
+ * This updates an existing blog. This request checks if the user has an writer role and is the
+ * original author of the blog
+ */
 router.patch(
   '/:id',
   validator(idSchema.blogId, ValidationSource.PARAM),
@@ -98,6 +102,40 @@ router.patch(
       new SuccessResponse('Blog updated successfully', blog).send(response);
     } catch (error) {
       logger.error(`Failed to update blog Err: ${error}`);
+      response.send({
+        error: error.message,
+      });
+    }
+  }),
+);
+
+/**
+ * Endpoint that allows a user with writer role to submit a blog.
+ * This essentially moves a blog from a draft state to published state
+ */
+router.patch(
+  '/submit/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  asyncHandler(async (request: ProtectedRequest, response) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(request.params.id));
+
+      if (!blog) {
+        throw new BadRequestError('Blog does not exist');
+      }
+
+      if (!blog.author._id.equals(request.user._id)) {
+        throw new ForbiddenError('You do not have the necessary permissions');
+      }
+
+      blog.isSubmitted = true;
+      blog.isDraft = false;
+
+      await blogRepository.update(blog);
+
+      new SuccessResponse('Blog submitted successfully', blog).send(response);
+    } catch (error) {
+      logger.error(`Encountered error submitting blog ${error}`);
       response.send({
         error: error.message,
       });
