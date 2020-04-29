@@ -111,7 +111,7 @@ router.patch(
 
 /**
  * Endpoint that allows a user with writer role to submit a blog.
- * This essentially moves a blog from a draft state to published state
+ * This essentially moves a blog from a draft state to submitted state
  */
 router.patch(
   '/submit/:id',
@@ -128,6 +128,10 @@ router.patch(
         throw new ForbiddenError('You do not have the necessary permissions');
       }
 
+      if (blog.isSubmitted) {
+        throw new BadRequestError('Blog already submitted');
+      }
+
       blog.isSubmitted = true;
       blog.isDraft = false;
 
@@ -136,9 +140,51 @@ router.patch(
       new SuccessResponse('Blog submitted successfully', blog).send(response);
     } catch (error) {
       logger.error(`Encountered error submitting blog ${error}`);
-      response.send({
-        error: error.message,
-      });
+      response
+        .send({
+          error: error.message,
+        })
+        .status(error.statusCode);
+    }
+  }),
+);
+
+/**
+ * Endpoint that allows a user with writer role to withdraw a blog.
+ * This essentially moves a blog from a submitted state to a draft state
+ */
+router.patch(
+  '/withdraw/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  asyncHandler(async (request: ProtectedRequest, response) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(request.params.id));
+
+      if (!blog) {
+        throw new BadRequestError('Blog does not exist');
+      }
+
+      if (!blog.author._id.equals(request.user._id)) {
+        throw new ForbiddenError('You do not have the necessary permissions');
+      }
+
+      if (!blog.isSubmitted) {
+        throw new BadRequestError('Blog already withdrawn');
+      }
+
+      blog.isSubmitted = false;
+      blog.isDraft = true;
+
+      await blogRepository.update(blog);
+
+      new SuccessResponse('Blog withdrawn successfully', blog).send(response);
+    } catch (error) {
+      logger.error(`Encountered error submitting blog ${error}`);
+      response
+        .send({
+          error: error.message,
+        })
+        .status(error.statusCode);
     }
   }),
 );
