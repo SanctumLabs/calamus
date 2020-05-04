@@ -1,6 +1,6 @@
 import express, { Response } from 'express';
 import { SuccessResponse, SuccessMsgResponse } from '@core/ApiResponse';
-import { ProtectedRequest, RoleRequest } from 'app-request';
+import { ProtectedRequest } from 'app-request';
 import { BadRequestError, ForbiddenError } from '@core/ApiError';
 import blogRepository from '@repository/blog';
 import Blog from '@repository/blog/BlogModel';
@@ -105,6 +105,38 @@ router.patch(
       response.send({
         error: error.message,
       });
+    }
+  }),
+);
+
+/**
+ * Endpoint that allows a user with writer role to delete a blog.
+ */
+router.delete(
+  '/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  asyncHandler(async (request: ProtectedRequest, response) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(request.params.id));
+
+      if (!blog) {
+        throw new BadRequestError('Blog does not exist');
+      }
+
+      if (!blog.author._id.equals(request.user._id)) {
+        throw new ForbiddenError('You do not have the necessary permissions');
+      }
+
+      await blogRepository.delete(blog);
+
+      new SuccessMsgResponse('Blog deleted successfully').send(response);
+    } catch (error) {
+      logger.error(`Encountered error deleting blog ${error}`);
+      response
+        .send({
+          error: error.message,
+        })
+        .status(error.statusCode);
     }
   }),
 );

@@ -1,6 +1,7 @@
 import Blog, { BlogModel } from './BlogModel';
 import { Types } from 'mongoose';
 import User from '@database/repository/user/UserModel';
+import { BlogDBException } from './exceptions';
 
 export default class BlogRepository {
   private static AUTHOR_DETAIL = 'name profilePicUrl';
@@ -38,6 +39,19 @@ export default class BlogRepository {
     )
       .lean<Blog>()
       .exec();
+  }
+
+  /**
+   * Deletes a blog post
+   * @param {Blog} blog Blog item to delete
+   */
+  public static async delete(blog: Blog): Promise<Blog> {
+    const foundBlog = await BlogModel.findOne({ _id: blog._id }).lean<Blog>().exec();
+    if (foundBlog) {
+      return BlogModel.deleteOne({ _id: blog._id }).lean<Blog>().exec();
+    } else {
+      throw new BlogDBException(`Failed to delete Blog ${blog._id}`);
+    }
   }
 
   public static findInfoById(id: Types.ObjectId): Promise<Blog> {
