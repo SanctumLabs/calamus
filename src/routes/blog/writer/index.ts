@@ -249,4 +249,52 @@ router.patch(
   }),
 );
 
+/**
+ * Get all submitted blogs
+ */
+router.get(
+  '/submitted/all',
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blogs = await blogRepository.findAllSubmissionsForWriter(req.user);
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Failed to get submitted blogs ${error}`);
+      res.send({ message: error.message }).status(500);
+    }
+  }),
+);
+
+/**
+ * Gets all published blogs
+ */
+router.get(
+  '/published/all',
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blogs = await blogRepository.findAllPublishedForWriter(req.user);
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Failed to get published blogs ${error}`);
+      res.status(500).send({ message: error.message });
+    }
+  }),
+);
+
+/**
+ * Get all drafts
+ */
+router.get(
+  '/drafts/all',
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blogs = await blogRepository.findAllDraftsForWriter(req.user);
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Failed to get drafts ${error}`);
+      res.send({ message: error.message }).status(500);
+    }
+  }),
+);
+
 export default router;
