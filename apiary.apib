@@ -572,7 +572,7 @@ Allows users with writer roles to get all *THEIR* draft blogs.
 
 ## Editor publish a blog [/api/v1/writer/blog/publish/{id}]
 
-### Get all draft blogs [PATCH]
+### Publish a blog [PATCH]
 
 Allows users with editor roles to publish a blog
 
@@ -593,6 +593,31 @@ Allows users with editor roles to publish a blog
             {
                 "statusCode": "10000",
                 "message": "Blog published successfully"   
+            }
+
+## Editor UnPublish a blog [/api/v1/writer/blog/unpublish/{id}]
+
+### UnPublish a blog [PATCH]
+
+Allows users with editor roles to unpublish a blog
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + id (string) - id of the blog to publish
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog unpublished"   
             }
 
 # Data Structures
