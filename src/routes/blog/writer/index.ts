@@ -200,11 +200,9 @@ router.patch(
       new SuccessResponse('Blog submitted successfully', blog).send(response);
     } catch (error) {
       logger.error(`Encountered error submitting blog ${error}`);
-      response
-        .send({
-          error: error.message,
-        })
-        .status(error.statusCode);
+      response.status(500).send({
+        error: error.message,
+      });
     }
   }),
 );
