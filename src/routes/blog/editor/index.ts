@@ -50,4 +50,39 @@ router.patch(
   }),
 );
 
+/**
+ * Unpublish a blog
+ */
+router.patch(
+  '/unpublish/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  asyncHandler(async (request: ProtectedRequest, response) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(request.params.id));
+
+      if (!blog) {
+        throw new BadRequestError('Blog does not exist');
+      }
+
+      // if the blog has already been unpublished
+      if (!blog.isPublished) {
+        throw new BadRequestError('Blog already unpublished');
+      }
+
+      blog.isDraft = true;
+      blog.isPublished = false;
+      blog.isSubmitted = true;
+
+      await blogRepository.update(blog);
+
+      return new SuccessMsgResponse('Blog Unpublished').send(response);
+    } catch (error) {
+      logger.error(`Failed to unpublish blog ${error}`);
+      response.status(500).send({
+        message: error.message,
+      });
+    }
+  }),
+);
+
 export default router;
