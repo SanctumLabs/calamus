@@ -132,11 +132,9 @@ router.delete(
       new SuccessMsgResponse('Blog deleted successfully').send(response);
     } catch (error) {
       logger.error(`Encountered error deleting blog ${error}`);
-      response
-        .send({
-          error: error.message,
-        })
-        .status(error.statusCode);
+      response.status(500).send({
+        error: error.message,
+      });
     }
   }),
 );

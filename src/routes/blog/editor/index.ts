@@ -85,4 +85,25 @@ router.patch(
   }),
 );
 
+/**
+ * Deletes a blog post
+ */
+router.delete(
+  '/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(req.params.id));
+      if (!blog) throw new BadRequestError('Blog does not exists');
+
+      blogRepository.delete(blog);
+
+      return new SuccessMsgResponse('Blog deleted successfully').send(res);
+    } catch (error) {
+      logger.error(`Failed to delete blog ${error}`);
+      res.status(500).send({ error: error.message });
+    }
+  }),
+);
+
 export default router;
