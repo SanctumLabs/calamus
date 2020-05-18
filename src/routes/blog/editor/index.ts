@@ -106,4 +106,62 @@ router.delete(
   }),
 );
 
+router.get(
+  '/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(req.params.id));
+
+      if (!blog) throw new BadRequestError('Blog does not exist');
+
+      if (!blog.isSubmitted && !blog.isPublished) throw new ForbiddenError('This blog is private');
+
+      new SuccessResponse('success', blog).send(res);
+    } catch (error) {
+      logger.error(`Failed to get blog ${error}`);
+      res.status(500).send({ message: error.message });
+    }
+  }),
+);
+
+router.get(
+  '/published/all',
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blogs = await blogRepository.findAllPublished();
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Error getting published blogs ${error}`);
+      res.status(500).send({ message: error.message });
+    }
+  }),
+);
+
+router.get(
+  '/submitted/all',
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blogs = await blogRepository.findAllSubmissions();
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Failed to get submitted blogs ${error}`);
+      res.status(500).send({ message: error.message });
+    }
+  }),
+);
+
+router.get(
+  '/drafts/all',
+  asyncHandler(async (req: ProtectedRequest, res) => {
+    try {
+      const blogs = await blogRepository.findAllDrafts();
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Error getting draft blogs ${error}`);
+      res.status(500).send({ message: error.message });
+    }
+  }),
+);
+
 export default router;
