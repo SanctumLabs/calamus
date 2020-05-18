@@ -6,7 +6,7 @@ import { ProtectedRequest } from 'app-request';
 import blogRepository from '@repository/blog';
 import { Types } from 'mongoose';
 import { BadRequestError, ForbiddenError } from '@core/ApiError';
-import { SuccessMsgResponse } from '@core/ApiResponse';
+import { SuccessMsgResponse, SuccessResponse } from '@core/ApiResponse';
 import logger from '@logger';
 
 const router = express.Router();
