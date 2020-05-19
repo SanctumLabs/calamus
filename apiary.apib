@@ -923,6 +923,48 @@ Allows clients to request for a blog with a slug
                 }
             }
 
+## Get all blogs by given tag [/api/v1/blogs/tags/{tag}?pageNumber={pageNumber}&pageItemCount={pageItemCount}]
+
+### Get blogs by the given tags [GET]
+
+Allows clients to request for a blogs with a given tag and specifiy the page number and the count per page
+
++ Request (application/json)
+
+    + Parameters
+        
+        + tag (string, required) - tag used to filter blogs
+        + pageNumber (number, required) - page number
+        + pageItemCount (number, required) - items per page
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
+                    {
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg"
+                    }
+                ]
+            }
+
 # Data Structures
 
 ## Blog (object)
