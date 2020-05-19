@@ -11,6 +11,9 @@ import logger from '@core/logger';
 
 const router = express.Router();
 
+/**
+ * Get blogs by given tag
+ */
 router.get(
   '/tag/:tag',
   validator(schema.blogTag, ValidationSource.PARAM),
@@ -35,6 +38,30 @@ router.get(
     } catch (error) {
       logger.error(`Failed to get blogs with tag ${request.params.tag}: Err: ${error}`);
       response.status(500).send({ message: error.message });
+    }
+  }),
+);
+
+/**
+ * Get blogs by the given author
+ */
+router.get(
+  '/author/:id',
+  validator(schema.authorId, ValidationSource.PARAM),
+  asyncHandler(async (request, response) => {
+    try {
+      const blogs = await blogReposiory.findAllPublishedForAuthor({
+        id: new Types.ObjectId(request.params.id),
+      } as User);
+
+      if (!blogs) {
+        throw new NoDataError();
+      }
+
+      return new SuccessResponse('success', blogs).send(response);
+    } catch (error) {
+      logger.error(`Error getting blogs for author ${request.params.id}, ${error}`);
+      response.status(500).send({ message: 'Error getting blogs for author' });
     }
   }),
 );
