@@ -3,6 +3,7 @@ import register from './auth/register';
 import deregister from './auth/deregister';
 import login from './auth/login';
 import token from './auth/token';
+import blog from './blog';
 import writer from './blog/writer';
 import editor from './blog/editor';
 import profile from './profile';
@@ -22,7 +23,7 @@ router.use('/v1/token', token);
 
 router.use('/v1/token', token);
 router.use('/v1/profile', profile);
-
+router.use('/v1/blog', blog);
 router.use('/v1/writer/blog', authentication, role(RoleCode.WRITER), authorization, writer);
 router.use('/v1/editor/blog', authentication, role(RoleCode.EDITOR), authorization, editor);
 export default router;

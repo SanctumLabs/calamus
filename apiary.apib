@@ -833,6 +833,96 @@ Allows users with editor roles to get all draft blogs
                 ]
             }
 
+## Get a blog by id [/api/v1/blog/{id}]
+
+### Get a single blog [GET]
+
+Allows client to get a blog by its id
+
++ Request (application/json)
+
+    + Parameters
+        
+        + id (string) - id of the blog to get
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "_id": "5eb8eb592529f059b20ef536",
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": {
+                        "_id": "5ea71cfe8bdc2c55032755d2",
+                        "name": "lusina",
+                        "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    },
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                }
+            }
+
+## Get a Blog by slug [/api/v1/blog?slug={slug}]
+
+### Get a blog by slug [GET]
+
+Allows clients to request for a blog with a slug
+
++ Request (application/json)
+
+    + Parameters
+        
+        + slug (string) - slug of the blog to get
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "_id": "5eb8eb592529f059b20ef536",
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": {
+                        "_id": "5ea71cfe8bdc2c55032755d2",
+                        "name": "lusina",
+                        "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    },
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                }
+            }
+
 # Data Structures
 
 ## Blog (object)
