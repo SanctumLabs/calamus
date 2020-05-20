@@ -1,80 +1,1078 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://calamusapi.herokuapp.com/
 
 # Calamus API
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Blog API that handles your blog applications ;D
 
-## Questions Collection [/questions]
+This is an open source project that can be found here https://github.com/Wyvarn/calamus
 
-### List All Questions [GET]
+## Health [/health]
+
+Checks the health of the application
+
+### Health [GET]
 
 + Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                'status': 'I am OK! :)'
+            }
+
+## Register a new user [/api/v1/register]
+
+### Registration [POST]
+
+This allows creation of a new user for your blogging platform. Roles could either be _writer_, _admin_, or _editor_
+
++ Request (application/json)
+
+    + Attributes
+        + name: Dredd (required) 
+        + email: drdredd@calamus.com (required)
+        + password: guns-and-knives (required)
+        + profilePicUrl: https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg (required)
+        + role: writer (required)
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Registration successful",
+                "data": {
+                    "user": {
+                        "_id": "5e972acd31687238d00c4754",
+                        "name": "Dredd",
+                        "email": "drdredd@calamus.com",
+                        "roles": [
+                            "5e96f312daf769d5681cd7cd"
+                        ],
+                        "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg"
+                    },
+                    "tokens": {
+                        "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw",
+                        "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1OTczMzMxOTcsInBybSI6IjM1Mjg1NzhhY2FmN2JiMjE3ZGFjMGNmYzhlMTgxNjBlZGMyNzBmMWJmOTc0NDI2NGM1Y2IwODdiMWYwMWUxNjg0ZWRjMzY4MjJhYzcwOWJmYjZkYmVmNGI0ZDQyNzYxYmJiYTBkM2YxNTlkYWM4MjY3YWNmZmUwNGQ5ZTY2Mjk5In0.CgoEtalmCglEldEWq_2ERsqekOYNUUUihnyn_-iuKLpxrTmXrfR2q52n8LQcWs7HyfVuanj0-nIkcLzzR1_X8A"
+                    }
+                }
+            }
+
+## Deregister a user [/api/v1/deregister]
+
+### DeRegistration [POST]
+
+This allows deregistration a user from your blogging platform. As long as the token is valid and is for the particular user. This user will be removed from the platform.
+
++ Request (application/json)
+
+    + Headers
+
+                Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "User deegistered"
+            }
+
+
+## Token Refresh [/api/v1/token/refresh]
+
+### Refresh expired Access Token [POST]
+
+This is used to issue new tokens when the access token has expired. In the body of the request, ensure you have the correct refresh token that was 
+issued alongside the expired access token.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+    
+    + Body
+
+            {
+                "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwYjQxNDYyZDUyODMyNDI2NDMzODNiNzZhY2Q5OTE4MzQ1YzJiMWU0YWRkMmMwMTM3Y2YxMjU4OWQ5MjkxNzUzM2FlZjJiZDk5NjZjZmYxNWUzZGM3MDIzYzg5Njg5NWJlNDc3ZmEwMjA2OTFkZDE0N2Q4OTg5NzRkMWRmYmY4OCIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTUsImV4cCI6MTU4NzY2NTk1NSwibmJmIjoxNTg3NDA2NzU1LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiJ9XX0.Ul4fIa6U9kGodd5FFKoDxKuxL7sfj3bug7h64WfogH5FUaq8WJJ5b10sFzC_qe7BllaM9hlthoo4trOmyAI3PQ",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Token Issued",
+                "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ODYzNGM4ZGMyNmYxNzZlMDU4OWIwMTk0OTFkZmZlZGMwZjg1YTY5NDlhNDUzNjlkZDEwZDYxNjZmYmZkNDI0MWE3YTQzZWQwMThjNGQwMjI4MjYxZjhkMTFkOGI2NjYzMGM1ODRkZTkxMzc4MmJmNWUzNTg5ZTdjZmI1YzJhOCIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTgsImV4cCI6MTU4NzQ5MzE1OCwibmJmIjoxNTg3NDA2NzU4LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiIsInN0YXR1cyI6dHJ1ZX1dfQ.jLC5ilEKKVm7-qa6edZ7adFQeWYA0RkjxYafO3ZiwKzT5q1tiHzpscPQvc2blpURqWNOHPjV2pr9leda02VMPA",
+                "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzExOGNkY2Y4N2M4Nzc2ZjZkYWU3YmMxMDkzMTBkNDgyOWE0ZjhiZmY4Yzc4MmMyZmRlMDdlMTVmNjA1YTM0YzExNjJhNDdiNTgyMDhjYTY4ZWZhYzU5MDUwZGEzOWUxM2ZmMDE0ZjRmMzNlOTE4Njc4MGRlMWJjOTFmOGM1NyIsImlzcyI6ImNhbGFtdXMuY29tIiwiYXVkIjoiY2FsYW11cy5jb20iLCJzdWIiOiI1ZTljMWI0M2IzZGY2NjY3ZDE1YzVmMjUiLCJpYXQiOjE1ODc0MDY3NTgsImV4cCI6MTU4NzY2NTk1OCwibmJmIjoxNTg3NDA2NzU4LCJuYW1lIjoibHVzaW5hIiwidHlwIjoiQmVhcmVyIiwicm9sZXMiOlt7Il9pZCI6IjVlOTZmMzEyZGFmNzY5ZDU2ODFjZDdjZiIsImNvZGUiOiJBRE1JTiIsInN0YXR1cyI6dHJ1ZX1dfQ.hgMr5ob2ZNWgs1quNrCwOi9ZCFKxs1R5--ShHtreKEyZC6q3ObbV1fFJB2V4COY3YebTW2bN1ufBwh3E-CH9Yg"
+            }
+  
+## Public Profile by ID [/api/v1/profile/public/id/{id}]
+
+### Get a user's profile by their ID [GET]
+
+Allows getting a users public profile given that we have their ID
+
++ Request (application/json)
+
+    + Parameters
+        
+        + id (string) - ID of registered user. This will be available in the response when registering a user
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "name": "Dredd",
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg"
+                }
+            }
+  
+## Public Profile by name [/api/v1/profile/public/u/{name}]
+
+### Get a user's profile by their NAME [GET]
+
+Allows getting a users public profile given that we have their name
+
++ Request (application/json)
+
+    + Parameters
+        
+        + name (string) - Name of registered user. This will be the registered user's name
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "name": "Dredd",
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg"
+                }
+            }
+
+## Private Profile [/api/v1/profile/my]
+
+### Get a user's private profile [GET]
+
+Allows getting a users private profile. This is a secured endpoint and requires an access token.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "name": "Dredd",
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg",
+                    "roles": [
+                        {
+                            "_id": "5e96f312daf769d5681cd7cf",
+                            "code": "ADMIN"
+                        }
+                    ]
+                }
+            }
+
+
+## Update a user profile [/api/v1/profile]
+
+### Updates a user profile [PATCH]
+
+Allows a user to update their profile with name and profilePicUrl
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Body
+
+            {
+                "name": "Judge Dredd",
+                "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Profile updated",
+                "data": {
+                    "name": "Judge Dredd",
+                    "profilePicUrl": "https://images-na.ssl-images-amazon.com/images/I/81tSRSR1JGL._AC_SL1500_.jpg",
+                    "roles": [
+                        {
+                            "_id": "5e96f312daf769d5681cd7cf",
+                            "code": "ADMIN"
+                        }
+                    ]
+                }
+            }
+
+## Writer create a blog [/api/v1/writer/blog]
+
+### Creates a new blog post [POST]
+
+Allows users with writer roles to create blogs
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Body
+
+            {
+                "title": "Introduction to Node.js and How Node.js works?",
+                "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                "text": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                "slug": "introduction-to-node-js-and-how-node-js-works",
+                "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                "tags": [
+                    "NODEJS",
+                    "BACKEND"
+                ]
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog created successfully",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": false,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+
+## Writer get/update/delte a blog [/api/v1/writer/blog/{ID}]
+
+### Updates an existing blog [PATCH]
+
+Allows users with writer roles to update *THEIR* already created blog post. This example demonstrates updating only the title.
+
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + ID (string) - id of the blog to update
+
+    + Body
+
+            {
+                "title": "How NodeJS works."
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog updated successfully",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": false,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "How NodeJS works.",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+
+### Deletes an existing blog [DELETE]
+
+Allows users with writer roles to delete *THEIR* already created blog post.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + ID (string) - id of the blog to delete
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog deleted successfully"
+            }
+
+### Get an existing blog [GET]
+
+Allows users with writer roles to get *THEIR* already created blog post.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + ID (string) - id of the blog to retrieve
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": false,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "How NodeJS works.",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+
+## Writer submit a blog [/api/v1/writer/blog/submit/{ID}]
+
+### Submits an existing blog [PATCH]
+
+Allows users with writer roles to submit *THEIR* already created blog post.
+
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + ID (string) - id of the blog to update
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog submitted successfully",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": false,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "How NodeJS works.",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+
+## Writer withdraws a blog [/api/v1/writer/blog/withdraw/{ID}]
+
+### Updates an existing blog [PATCH]
+
+Allows users with writer roles to withdraw *THEIR* already submitted blog post.
+
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + ID (string) - id of the blog to update
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog withdrawn successfully",
+                "data": {
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": false,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "_id": "5ea726929ae1e474030bd9cb",
+                    "title": "How NodeJS works.",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": "5ea71cfe8bdc2c55032755d2",
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2",
+                    "createdAt": "2020-04-27T18:38:10.295Z",
+                    "updatedAt": "2020-04-27T18:38:10.295Z"
+                }
+            }
+
+## Writer gets all submitted blogs [/api/v1/writer/blog/submitted/all]
+
+### Get all submitted blogs [GET]
+
+Allows users with writer roles to get all *THEIR* submitted blogs.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + statusCode: 10000 (string,required) - Status code
+        + message: success (string, required) - Message from Server
+        + data: (array[Blog]) - Array of submitted blogs
+
+## Writer gets all published blogs [/api/v1/writer/blog/published/all]
+
+### Get all published blogs [GET]
+
+Allows users with writer roles to get all *THEIR* published blogs.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + statusCode: 10000 (string,required) - Status code
+        + message: success (string, required) - Message from Server
+        + data: (array[Blog]) - Array of published blogs
+
+## Writer gets all draft blogs [/api/v1/writer/blog/drafts/all]
+
+### Get all draft blogs [GET]
+
+Allows users with writer roles to get all *THEIR* draft blogs.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + statusCode: 10000 (string,required) - Status code
+        + message: success (string, required) - Message from Server
+        + data: (array[Blog]) - Array of draft blogs
+
+## Editor publish a blog [/api/v1/writer/blog/publish/{id}]
+
+### Publish a blog [PATCH]
+
+Allows users with editor roles to publish a blog
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + id (string) - id of the blog to publish
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog published successfully"   
+            }
+
+## Editor UnPublish a blog [/api/v1/writer/blog/unpublish/{id}]
+
+### UnPublish a blog [PATCH]
+
+Allows users with editor roles to unpublish a blog
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + id (string) - id of the blog to publish
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog unpublished"   
+            }
+
+## Editor Get/Delete a blog [/api/v1/writer/blog/{id}]
+
+### Delete a blog [DELETE]
+
+Allows users with editor roles to delete a blog
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + id (string) - id of the blog to delete
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "Blog deleted successfully"
+            }
+
+### Get a blog [GET]
+
+Allows users with editor roles to get a blog
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
+    + Parameters
+        
+        + id (string) - id of the blog to get
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "_id": "5eb8eb592529f059b20ef536",
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": {
+                        "_id": "5ea71cfe8bdc2c55032755d2",
+                        "name": "lusina",
+                        "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    },
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                }
+            }
+
+## Editor get all published blogs [/api/v1/editor/blog/published/all]
+
+### Get all published blog [GET]
+
+Allows users with editor roles to get all published blogs
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
                     {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "isSubmitted": true,
+                        "isDraft": true,
+                        "isPublished": false,
+                        "status": true,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                        "createdBy": "5ea71cfe8bdc2c55032755d2",
+                        "updatedBy": "5ea71cfe8bdc2c55032755d2"
                     }
                 ]
             }
+
+## Editor get all submitted blogs [/api/v1/editor/blog/submitted/all]
+
+### Get all submitted blogs [GET]
+
+Allows users with editor roles to get all submitted blogs
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
+                    {
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "isSubmitted": true,
+                        "isDraft": true,
+                        "isPublished": false,
+                        "status": true,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                        "createdBy": "5ea71cfe8bdc2c55032755d2",
+                        "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                    }
+                ]
+            }
+
+## Editor get all draft blogs [/api/v1/editor/blog/drafts/all]
+
+### Get all draft blogs [GET]
+
+Allows users with editor roles to get all draft blogs
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxhbXVzLmNvbSIsImF1ZCI6ImNhbGFtdXMuY29tIiwic3ViIjoiNWU5NzJhY2QzMTY4NzIzOGQwMGM0NzU0IiwiaWF0IjoxNTg2OTY1MTk3LCJleHAiOjE1ODk1NTcxOTcsInBybSI6ImMzMzdhYTJhYmYwYjkwODYyZWIyMWFlNzJiNWUwODFhNDlhNmVhZmU2NzIyODZlNDdjM2NiMDI4YTM1ODFjYWM0ZDEzZmIxM2QyYmIzODM1N2NlMjE3ZThmZWVmYmMyZTg0MTQ1MWQ0NDg5OWJlNDY5ZGZmYWQ0NjZmODJhNDk0In0.iPEAdmZ7VDWHjR--KIzc9NI5NcoyXFQGeE_ZyohofMxC4M3H9qIVmqdRNZyDKQc1mtsgYysk_Q6wmXUdkpKySw
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
+                    {
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "isSubmitted": true,
+                        "isDraft": true,
+                        "isPublished": false,
+                        "status": true,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                        "createdBy": "5ea71cfe8bdc2c55032755d2",
+                        "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                    }
+                ]
+            }
+
+## Get a blog by id [/api/v1/blog/{id}]
+
+### Get a single blog [GET]
+
+Allows client to get a blog by its id
+
++ Request (application/json)
+
+    + Parameters
+        
+        + id (string) - id of the blog to get
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "_id": "5eb8eb592529f059b20ef536",
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": {
+                        "_id": "5ea71cfe8bdc2c55032755d2",
+                        "name": "lusina",
+                        "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    },
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                }
+            }
+
+## Get a Blog by slug [/api/v1/blog?slug={slug}]
+
+### Get a blog by slug [GET]
+
+Allows clients to request for a blog with a slug
+
++ Request (application/json)
+
+    + Parameters
+        
+        + slug (string) - slug of the blog to get
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": {
+                    "_id": "5eb8eb592529f059b20ef536",
+                    "tags": [
+                        "NODEJS",
+                        "BACKEND"
+                    ],
+                    "likes": 0,
+                    "isSubmitted": true,
+                    "isDraft": true,
+                    "isPublished": false,
+                    "status": true,
+                    "title": "Introduction to Node.js and How Node.js works?",
+                    "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                    "draftText": "<p>This will depend on how you render the blog. It can be html text or plain text.</p>",
+                    "author": {
+                        "_id": "5ea71cfe8bdc2c55032755d2",
+                        "name": "lusina",
+                        "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                    },
+                    "slug": "introduction-to-node-js-and-how-node-js-works",
+                    "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg",
+                    "createdBy": "5ea71cfe8bdc2c55032755d2",
+                    "updatedBy": "5ea71cfe8bdc2c55032755d2"
+                }
+            }
+
+## Get all blogs by given tag [/api/v1/blogs/tags/{tag}?pageNumber={pageNumber}&pageItemCount={pageItemCount}]
+
+### Get blogs by the given tags [GET]
+
+Allows clients to request for a blogs with a given tag and specifiy the page number and the count per page. Note, this will only list
+published blogs
+
++ Request (application/json)
+
+    + Parameters
+        
+        + tag (string, required) - tag used to filter blogs
+        + pageNumber (number, required) - page number
+        + pageItemCount (number, required) - items per page
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
+                    {
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg"
+                    }
+                ]
+            }
+
+## Get all latest blogs [/api/v1/blogs/latest?pageNumber={pageNumber}&pageItemCount={pageItemCount}]
+
+### Get all the latest [GET]
+
+Allows clients to request for all latest blogs and specifiy the page number and the count per page. Note, this will only list
+published blogs
+
++ Request (application/json)
+
+    + Parameters
+        
+        + pageNumber (number, required) - page number
+        + pageItemCount (number, required) - items per page
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
+                    {
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg"
+                    }
+                ]
+            }
+
+## Get all similar blogs [/api/v1/blogs/similar/{id}?limit={limit}]
+
+### Get all similar blog posts [GET]
+
+Allows clients to request for all similar blogs for the given blog post with id & specify a limit for the response
+
++ Request (application/json)
+
+    + Parameters
+        
+        + id (string, required) - id of the blog post
+        + limit (number, required) - limit of the response
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "statusCode": "10000",
+                "message": "success",
+                "data": [
+                    {
+                        "_id": "5eb8eb592529f059b20ef536",
+                        "tags": [
+                            "NODEJS",
+                            "BACKEND"
+                        ],
+                        "likes": 0,
+                        "title": "Introduction to Node.js and How Node.js works?",
+                        "description": "Node.js is a popular framework for building backend systems (network applications) which can scale very well. Node.js is a Javascript runtime i.e. it runs the javascript codes.",
+                        "author": {
+                            "_id": "5ea71cfe8bdc2c55032755d2",
+                            "name": "lusina",
+                            "profilePicUrl": "https://avatars1.githubusercontent.com/u/11065002?s=460&u=1e8e42bda7e6f579a2b216767b2ed986619bbf78&v=4"
+                        },
+                        "slug": "introduction-to-node-js-and-how-node-js-works",
+                        "imgUrl": "https://s3.ap-south-1.amazonaws.com/afteracademy-server-uploads/introduction-to-node-js-how-node-js-works-cover.jpg"
+                    }
+                ]
+            }
+
+# Data Structures
+
+## Blog (object)
+
++ tags (array) - tags this blog can be categorized into. Array of strings
++ likes (number) - Number of likes this blog has received
++ isSubmitted (boolean) - Whether the blog has been submitted
++ isDraft (boolean) - Whether the blog is a draft
++ isPublished (boolean) - whether the blog has been published
++ status (boolean) - Whether the blog is ready for any operation
++ _id (string) - Id of the blog
++ title (string) - Title of the blog
++ description (string) - Description of the blog
++ draftText (string) - Draft text of the blog
++ author (Author) - Author of this blog post,
++ slug (string) - Slug url of this blog post
++ imgUrl (string) - Image URL of the blog post
++ createdBy (string) - Author who created this blog
++ updatedBy (string) - Author who updated this blog
++ createdAt (string) - timestamp indicating when this blog post was created
++ updatedAt (string) - timestamp indicating when this blog post was updated
+
+## Author (object)
+
++ _id (string) - Id of the author
++ name (string) - Name of the author
++ profilePicUrl (string) - Profile Pic url of the user

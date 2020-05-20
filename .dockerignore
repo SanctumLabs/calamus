@@ -1,0 +1,47 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+.idea/
+
+# ignore vs code project config files
+.vscode/settings.json
+.vs
+
+# ignore logs
+logs
+*.log
+
+# ignore 3rd party lib
+node_modules
+
+# ignore key
+*.pem
+
+# Ignore built files
+build
+dist
+
+# ignore test converage
+coverage
+
+# Environment varibles
+*.env
+*.env.*
+.vscode
+mongodb/
+scripts/
+
+jest.config.js
+nodemon.json
+Procfile
+tsconfig.json
+tslint.json
+webpack.config.js
+yarn.lock
+*.log
+.releaserc.json
+.nvmrc
+.npmignore
+.lintstagedrc
+.gitignore
+.babelrc
+.github
+!build

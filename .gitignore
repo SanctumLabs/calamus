@@ -17,6 +17,7 @@ node_modules
 
 # Ignore built files
 build
+dist
 
 # ignore test converage
 coverage
@@ -24,3 +25,6 @@ coverage
 # Environment varibles
 *.env
 *.env.*
+!.env.example
+!.env.test.example
+.vscode

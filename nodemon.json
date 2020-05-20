@@ -1,0 +1,14 @@
+{
+    "ignore": [
+      "node_modules",
+      "**/*.test.ts",
+      "**/*.spec.ts"
+    ],
+    "watch": [
+      "src",
+      "build",
+      "yarn.lock"
+    ],
+    "exec": "npm run serve",
+    "ext": "ts"
+  }

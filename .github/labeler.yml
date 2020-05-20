@@ -1,0 +1,66 @@
+# https://github.com/actions/labeler
+core:
+  - src/core/*
+  - src/core/**/*
+
+auth:
+  - src/security/*
+  - src/security/**/*
+
+database:
+  - src/database/*
+  - src/database/**/*
+
+utils:
+  - src/utils/*
+  - src/utils/**/*
+
+config:
+  - src/config.(ts|js)
+  - tsconfig.json
+
+chore:
+  - tslint.json
+  - .gitignore
+  - .env.*
+  - lintstagedrc
+  - github/*
+  - .npmignore
+
+build:
+  - webpack.config.js
+  - Dockerfile
+  - docker-compose.yml
+  - .nvmrc
+  - .babelrc
+  - mongodb/*
+
+api:
+  - src/routes/*
+  - src/routes/**/*
+
+dependencies:
+  - package.json
+  - yarn.lock
+ 
+documentation:
+  - ./.*md
+  - ./*.apib
+  - LICENSE
+
+ci:
+  - .travis.yml
+  - Procfile
+  - .releaserc.json
+  - github/workflows/*
+
+test:
+  - src/**/*.test.(ts|js)
+  - src/**/*.spec.(js|ts)
+  - jest.config.js
+
+linting:
+  - .prettierrc
+  - .prettierignore
+  - .eslintignore
+  - .eslintrc

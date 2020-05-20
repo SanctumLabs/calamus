@@ -4,7 +4,7 @@ services:
   mongo:
     # To create this service, Compose will pull the mongo
     image: mongo:4.2.5
-    container_name: mongo
+    container_name: calamus_mongo
     restart: unless-stopped
     # This tells Compose that we would like to add environment variables 
     # from a file called .env, located in our build context.

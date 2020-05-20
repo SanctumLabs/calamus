@@ -1,21 +1,33 @@
 {
     "compilerOptions": {
         "module": "commonjs",
+        "allowJs": true,
         "esModuleInterop": true,
-        "target": "es6",
+        "target": "ESNext",
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "build",
-		"baseUrl": ".",
+        "baseUrl": "src",
         "paths": {
-            "*": [
-                "node_modules/*",
-                "src/types/*"
-            ]
+            "@app": ["app.ts"],
+            "@config": ["config.ts"],
+            "@database/*": ["database/*"],
+            "@repository/*": ["database/repository/*"],
+            "@core/*": ["core/*"],
+            "@jwt": ["core/jwt/JWT.ts"],
+            "@logger": ["core/logger.ts"],
+            "@routes": ["routes/index.ts"],
+            "@security/*": ["security/*"],
+            "@authentication/*": ["security/authentication/*"],
+            "@authorization/*": ["security/authorization/*"],
+            "@authUtils": ["security/authUtils/index.ts"],
+            "@utils/*": ["utils/*"],
+            "app-request": ["types/app-request.d.ts"]
         }
     },
     "include": [
         "src/**/*"
-	]
+    ],
+    "exclude": ["node_modules", "build", "dist",".vscode"]
 }
