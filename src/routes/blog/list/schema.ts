@@ -12,4 +12,7 @@ export default {
   authorId: Joi.object().keys({
     id: JoiObjectId().required(),
   }),
+  limit: Joi.object().keys({
+    limit: Joi.number().required().integer().min(1),
+  }),
 };

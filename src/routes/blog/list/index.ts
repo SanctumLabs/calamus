@@ -5,6 +5,7 @@ import blogRepository from '@repository/blog';
 import { Types } from 'mongoose';
 import validator, { ValidationSource } from '@utils/validators';
 import schema from './schema';
+import idSchema from '../schema';
 import asyncHandler from '@utils/asyncHandler';
 import User from '@repository/user/UserModel';
 import logger from '@core/logger';
@@ -86,7 +87,35 @@ router.get(
       return new SuccessResponse('success', blogs).send(res);
     } catch (error) {
       logger.error(`Failed to fetch latest blogs ${error}`);
-      response.status(500).send({ message: error.message });
+      res.status(500).send({ message: error.message });
+    }
+  }),
+);
+
+/**
+ * Find all similar blog posts for the given blog
+ */
+router.get(
+  '/similar/:id',
+  validator(idSchema.blogId, ValidationSource.PARAM),
+  validator(schema.limit, ValidationSource.QUERY),
+  asyncHandler(async (req, res) => {
+    try {
+      const blog = await blogRepository.findBlogAllDataById(new Types.ObjectId(req.params.id));
+
+      if (!blog || !blog.isPublished) throw new BadRequestError('Blog is not available');
+
+      const limit = req.query.limit;
+
+      // @ts-ignore
+      const blogs = await blogRepository.searchSimilarBlogs(blog, parseInt(limit));
+
+      if (!blogs) throw new NoDataError();
+
+      return new SuccessResponse('success', blogs).send(res);
+    } catch (error) {
+      logger.error(`Failed to fetch similar blog posts ${error}`);
+      res.send({ message: 'Could not find similar blog posts' });
     }
   }),
 );
