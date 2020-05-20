@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import { SuccessResponse } from '@core/ApiResponse';
 import { NoDataError, BadRequestError } from '@core/ApiError';
 import blogRepository from '@repository/blog';
