@@ -4,6 +4,10 @@ node_js:
   - '11'
   - '12'
   - '13'
+  - '14'
+
+before_script:
+  - yarn install
 
 stages:
   - tests
