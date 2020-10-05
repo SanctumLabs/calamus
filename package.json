@@ -3,7 +3,7 @@
   "private": false,
   "description": "express blog api",
   "main": "server.js",
-  "version": "1.18.3",
+  "version": "1.18.2",
   "repository": "git@github.com:Wyvarn/calamus.git",
   "author": "BrianLusina <12752833+BrianLusina@users.noreply.github.com>",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.9.23",
     "winston": "^3.2.1",
-    "snyk": "^1.406.0"
+    "snyk": "^1.393.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -61,7 +61,7 @@
     "@types/node": "^14.6.4",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^4.3.0",
+    "@typescript-eslint/parser": "^4.1.0",
     "colors": "^1.4.0",
     "concurrently": "^5.2.0",
     "dotenv": "^8.2.0",
