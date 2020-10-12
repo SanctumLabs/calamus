@@ -3,7 +3,7 @@
   "private": false,
   "description": "express blog api",
   "main": "server.js",
-  "version": "1.19.1",
+  "version": "1.19.2",
   "repository": "git@github.com:Wyvarn/calamus.git",
   "author": "BrianLusina <12752833+BrianLusina@users.noreply.github.com>",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "helmet": "^3.22.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
-    "mongoose": "^5.9.23",
+    "mongoose": "^5.10.9",
     "winston": "^3.2.1",
     "snyk": "^1.407.0"
   },
