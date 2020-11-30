@@ -1960,3 +1960,7 @@ patch:
         patched: '2020-10-12T09:17:45.211Z'
     - webpack-cli > @webpack-cli/init > @webpack-cli/generators > @webpack-cli/webpack-scaffold > jscodeshift > @babel/preset-env > @babel/preset-modules > @babel/plugin-transform-dotall-regex > @babel/helper-create-regexp-features-plugin > @babel/helper-annotate-as-pure > @babel/types > lodash:
         patched: '2020-10-12T09:17:45.211Z'
+    - snyk > snyk-python-plugin > snyk-poetry-lockfile-parser > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-11-30T11:49:41.620Z'
+    - snyk > snyk-python-plugin > snyk-poetry-lockfile-parser > @snyk/cli-interface > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-11-30T11:49:41.620Z'
