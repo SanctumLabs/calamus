@@ -10,7 +10,7 @@
   "scripts": {
     "start": "NODE_ENV=development npm-run-all --parallel watch:build watch:server",
     "serve": "node -r dotenv/config --inspect=5858 build/server.js",
-    "build": "npm run clean && webpack --optimize-minimize",
+    "build": "npm run clean && webpack",
     "clean": "rm -rf build",
     "watch:server": "nodemon",
     "watch:build": "webpack --watch",
