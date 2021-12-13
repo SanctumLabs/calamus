@@ -35,7 +35,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^5.11.7",
     "winston": "^3.2.1",
-    "snyk": "^1.753.0"
+    "snyk": "^1.790.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
