@@ -46,7 +46,7 @@
     "@babel/preset-typescript": "^7.16.0",
     "@commitlint/cli": "^9.1.2",
     "@commitlint/config-conventional": "^8.3.4",
-    "@shelf/jest-mongodb": "^1.1.5",
+    "@shelf/jest-mongodb": "^2.1.1",
     "@types/bcrypt": "^3.0.0",
     "@types/body-parser": "^1.19.0",
     "@types/cookie-parser": "^1.4.2",
