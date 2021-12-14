@@ -3,7 +3,7 @@
   "private": false,
   "description": "express blog api",
   "main": "server.js",
-  "version": "1.21.5",
+  "version": "1.22.0",
   "repository": "git@github.com:Wyvarn/calamus.git",
   "author": "BrianLusina <12752833+BrianLusina@users.noreply.github.com>",
   "license": "MIT",
@@ -33,9 +33,9 @@
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongoose": "^5.11.7",
+    "mongoose": "^6.1.1",
     "winston": "^3.2.1",
-    "snyk": "^1.753.0"
+    "snyk": "^1.790.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -73,7 +73,7 @@
     "jest": "^26.4.2",
     "jest-runner-tsc": "^1.6.0",
     "lint-staged": "^10.5.4",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
