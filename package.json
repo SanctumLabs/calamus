@@ -54,7 +54,7 @@
     "@types/express": "^4.17.6",
     "@types/hapi__joi": "^16.0.12",
     "@types/helmet": "^0.0.46",
-    "@types/jest": "^26.0.13",
+    "@types/jest": "^27.4.0",
     "@types/jsonwebtoken": "^8.3.9",
     "@types/lodash": "^4.14.168",
     "@types/node": "^17.0.10",
