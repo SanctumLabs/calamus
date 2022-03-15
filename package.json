@@ -63,7 +63,7 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^5.13.0",
     "colors": "^1.4.0",
-    "concurrently": "^5.2.0",
+    "concurrently": "^7.0.0",
     "dotenv": "^14.2.0",
     "dredd": "^13.1.0",
     "eslint": "^8.10.0",
